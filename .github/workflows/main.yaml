@@ -1,0 +1,19 @@
+name: Main
+on:
+  workflow_call:
+    inputs:
+      commit-workflow:
+        required: true
+        type: string
+      rust-working-directory:
+        required: true
+        type: string
+        default: "."
+    secrets:
+jobs:
+  bbw-rust:
+    runs-on: ubuntu-latest
+    if: "${{ inputs.commit-workflow == 'bbw-rust' }}"
+    steps:
+    - name: Build Rust Application
+      uses: ./.github/actions/my-action
