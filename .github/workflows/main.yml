@@ -23,4 +23,4 @@ jobs:
 
     - run: tree
     - name: Build Rust Application
-      uses: ./.shared/github/workflows/bbw-rust@main
+      uses: ./.shared/.github/workflows/bbw-rust@main
