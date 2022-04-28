@@ -8,10 +8,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Checkout
-    uses: actions/checkout@v3
-    with:
-      submodules: 'true'
   - name: Configure rust cache
     uses: Swatinem/rust-cache@v1
     working-directory: ${{ input.working-directory }}
