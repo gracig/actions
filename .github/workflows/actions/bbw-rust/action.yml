@@ -1,0 +1,23 @@
+name: 'bbw-rust'
+description: 'Build Rust Programs'
+inputs:
+  working-directory:
+    description: 'The working directory to run the commands'
+    required: true
+    default: '.'
+runs:
+  using: "composite"
+  steps:
+  - name: Checkout
+    uses: actions/checkout@v3
+    with:
+      submodules: 'true'
+  - name: Configure rust cache
+    uses: Swatinem/rust-cache@v1
+    working-directory: ${{ input.working-directory }}
+  - name: Run tests
+    run: cargo test
+    working-directory: ${{ input.working-directory }}
+  - name: Build
+    run: cargo build --release
+    working-directory: ${{ input.working-directory }}
