@@ -15,6 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     if: "${{ inputs.commit-workflow == 'bbw-rust' }}"
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout
     - name: Build Rust Application
       uses: .github/actions/bbw-rust
