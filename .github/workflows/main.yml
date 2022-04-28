@@ -23,4 +23,4 @@ jobs:
         repository: "${{ env.SHARED_WORKFLOWS_REPO }}"
         path: "${{ env.SHARED_WORKFLOWS_TARGET }}"
     - name: Build Rust Application
-      uses: "${{ env.SHARED_WORKFLOWS_TARGET }}/.github/workflows/actions/build-rust"
+      uses: "./.shared/.github/workflows/actions/build-rust"
