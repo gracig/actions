@@ -13,8 +13,10 @@ runs:
       with:
         working-directory: "${{ inputs.working-directory }}"
     - name: Run tests
+      shell: sh
       run: cargo test
       working-directory: "${{ inputs.working-directory }}"
     - name: Build
+      shell: sh
       run: cargo build --release
       working-directory: "${{ inputs.working-directory }}"
