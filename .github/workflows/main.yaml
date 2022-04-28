@@ -9,7 +9,7 @@ on:
         required: true
         type: string
         default: "."
-    secrets:
+    secrets: {}
 jobs:
   bbw-rust:
     runs-on: ubuntu-latest
