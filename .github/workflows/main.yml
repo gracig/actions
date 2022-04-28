@@ -12,9 +12,6 @@ on:
     secrets: {}
 env:
   SHARED_WORKFLOWS_REPO: "gracig/actions"
-  SHARED_WORKFLOWS_TARGET: "./.shared"
-  SHARED_ACTIONS_DIR: '${{ env.SHARED_WORKFLOWS_TARGET }}/.github/workflows/actions'
-  BUILD_RUST_ACTION: '${{ env.SHARED_ACTIONS_DIR }}'
 jobs:
   build-rust:
     runs-on: ubuntu-latest
@@ -23,6 +20,6 @@ jobs:
     - uses: actions/checkout@v3
       with:
         repository: "${{ env.SHARED_WORKFLOWS_REPO }}"
-        path: "${{ env.SHARED_WORKFLOWS_TARGET }}"
+        path: "./.shared"
     - name: Build Rust Application
-      uses: "${{ env.BUILD_RUST_ACTION }}"
+      uses: "./.shared/.github/workflows/actions/build-rust"
