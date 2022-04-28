@@ -11,10 +11,10 @@ runs:
     - name: Configure rust cache
       uses: Swatinem/rust-cache@v1
       with:
-        working-directory: "${{ input.working-directory }}"
+        working-directory: "${{ inputs.working-directory }}"
     - name: Run tests
       run: cargo test
-      working-directory: "${{ input.working-directory }}"
+      working-directory: "${{ inputs.working-directory }}"
     - name: Build
       run: cargo build --release
-      working-directory: "${{ input.working-directory }}"
+      working-directory: "${{ inputs.working-directory }}"
