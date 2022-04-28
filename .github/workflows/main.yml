@@ -14,6 +14,7 @@ env:
   SHARED_WORKFLOWS_REPO: "gracig/actions"
   SHARED_WORKFLOWS_TARGET: "./.shared"
   SHARED_ACTIONS_DIR: '${{ env.SHARED_WORKFLOWS_TARGET }}/.github/workflows/actions'
+  BUILD_RUST_ACTION: '${{ env.SHARED_ACTIONS_DIR }}'
 jobs:
   build-rust:
     runs-on: ubuntu-latest
@@ -24,4 +25,4 @@ jobs:
         repository: "${{ env.SHARED_WORKFLOWS_REPO }}"
         path: "${{ env.SHARED_WORKFLOWS_TARGET }}"
     - name: Build Rust Application
-      uses: "${{ env.SHARED_ACTIONS_DIR }}/build-rust"
+      uses: "${{ env.BUILD_RUST_ACTION }}"
