@@ -21,6 +21,6 @@ jobs:
         repository: gracig/actions
         path: ./.shared
 
-    - run: tree
+    - run: tree -a
     - name: Build Rust Application
       uses: ./.shared/.github/workflows/bbw-rust@main
