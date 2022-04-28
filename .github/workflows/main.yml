@@ -16,4 +16,4 @@ jobs:
     if: "${{ inputs.commit-workflow == 'bbw-rust' }}"
     steps:
     - name: Build Rust Application
-      uses: .github/workflows/bbw-rust
+      uses: ./.github/workflows/bbw-rust
