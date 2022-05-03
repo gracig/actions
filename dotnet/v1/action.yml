@@ -1,0 +1,183 @@
+name: Dotnet V1 Action
+description: Build, Test and Package a Dotnet application
+inputs:
+  DOTNET_SETUP_VERSION:
+    required: true
+    description: |
+      Choose the setup_dotnet action to use
+      Possible Values:
+      - v.1.7.2
+      - v.2.0.0
+    default: "v.1.7.2"
+
+  DOTNET_SDK_VERSION:
+    required: true
+    description: |
+      The desired version of the .NET SDK to be used 
+      when building the source code.
+      5.0.x Uses the latest version from the 5.0 channel
+    default: 5.0.x
+
+  DOTNET_NUGET_STRATEGY:
+    required: true
+    description: |
+      The nuget feed strategy to used.
+      Possible Values:
+      - sleet/v1: 
+        Description: Use sleet as nuget feed source
+        Requirements:
+        - inputs.DOTNET_NUGET_SLEET_FEED_HOST
+        - inputs.DOTNET_NUGET_SLEET_FEED_NAMES
+        - secrets.SLEET_FEED_USERNAME
+        - secrets.SLEET_FEED_PASSWORD
+      - jfrog/v1: Use JFrog Artifact as nuget feed source
+        Note: Jfrog is not implemented yet.
+    default: sleet/v1
+
+  DOTNET_NUGET_SLEET_FEED_HOST:
+    required: false
+    description: |
+      The sleet host to query and download dotnet packages
+      Possible Values:
+      - any valid sleet host
+      Used when:
+      - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+    default: "https://d264i66ars8gn3.cloudfront.net"
+
+  DOTNET_NUGET_SLEET_FEED_NAMES:
+    required: false
+    description: |
+      The feed names on the host to query packages.
+      Could be a list separated by white spaces
+      Possible Values:
+      - LibNugetFeed
+      - CCRFeed
+      Used when:
+      - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+    default: LibNugetFeed
+
+  DOTNET_BUILD_STRATEGY:
+    required: false
+    description: |
+      The build strategy to use
+      Possible Values:
+      - build/v1: 
+        Description: Do a simple build, test and publish
+        Requirements:
+        - inputs.DOTNET_SOLUTION_FILE
+        - inputs.DOTNET_BUILD_CONFIGURATION
+        - inputs.DOTNET_APP_VERSION
+        - env.DOTNET_TEST_RESULT_PATH
+      - jfrog/v1: Use JFrog Artifact as nuget feed source
+        Note: Jfrog is not implemented yet.
+    default: dotnet-build/v1
+
+  DOTNET_SOLUTION_FILE:
+    required: false
+    description: |
+      The file path to the solution file of the app to build.
+      Used when:
+      - inputs.DOTNET_BUILD_STRATEGY == build/v1
+    default: DOTNET_SOLUTION_FILE_DEFAULT
+
+  DOTNET_APP_VERSION:
+    required: false
+    description: |
+      The version number of the dotnet application
+      Used when:
+      - inputs.DOTNET_BUILD_STRATEGY == build/v1
+    default: UNVERSIONED
+
+  DOTNET_APP_PATH:
+    required: false
+    description: |
+      Indicates the file path to publish a dotnet application
+      That path may be referenced inside the Dockerfile
+      Used when: 
+      - inputs.DOTNET_BUILD_STRATEGY == build/v1
+    default: DOTNET_APP_PATH_DEFAULT
+
+  DOTNET_BUILD_CONFIGURATION:
+    required: false
+    description: |
+      Indicate the Build Configuration to run when
+      making a dotnet publish
+      Used when:
+      - inputs.DOTNET_BUILD_STRATEGY == build/v1
+    default: "Release"
+
+  DOTNET_TEST_RESULTS_PATH:
+    required: false
+    description: |
+      Indicate the path to store the test results
+    default: ${{ github.workspace }}/artifacts/test-results
+
+  SLEET_FEED_USERNAME:
+    required: false
+    description: |
+      The sleet username when using sleet nuget strategy
+    default: "SLEET_USERNAME"
+
+  SLEET_FEED_PASSWORD:
+    required: false
+    description: |
+      The sleet password when using sleet nuget strategy
+    default: "SLEET_PASSWORD"
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Setup DotNet v.1.7.2
+      if: inputs.DOTNET_SETUP_VERSION == 'v.1.7.2'
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ inputs.DOTNET_SDK_VERSION }}
+
+    - name: Setup DotNet v.2.0.0
+      if: inputs.DOTNET_SETUP_VERSION == 'v.2.0.0'
+      uses: actions/setup-dotnet@v2.0.0
+      with:
+        dotnet-version: ${{ inputs.DOTNET_SDK_VERSION }}
+
+    - name: Setup DotNet feed source with sleet
+      if: inputs.DOTNET_NUGET_STRATEGY == 'sleet/v1'
+      uses: "./.actions/dotnet-nuget-sleet/v1"
+      with:
+        DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
+        DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
+        SLEET_FEED_USERNAME: ${{ inputs.SLEET_FEED_USERNAME }}
+        SLEET_FEED_PASSWORD: ${{ inputs.SLEET_FEED_PASSWORD }}
+        CLEANUP: "false"
+
+    - name: Setup DotNet feed source with JFrog Artifactory
+      if: inputs.DOTNET_NUGET_STRATEGY == 'jfrog/v1'
+      uses: "./.actions/dotnet-nuget-jfrog/v1"
+      with:
+        CLEANUP: "false"
+
+    - name: Build DotNet v1 application
+      if: inputs.DOTNET_BUILD_STRATEGY == 'build/v1'
+      uses: "./.actions/dotnet-build/v1"
+      with:
+        DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
+        DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
+        DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
+        DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}      
+        DOTNET_TEST_RESULTS_PATH: ${{ inputs.DOTNET_TEST_RESULTS_PATH }}      
+
+    - name: Cleanup DotNet feed source with sleet
+      if: inputs.DOTNET_NUGET_STRATEGY == 'sleet/v1'
+      uses: "./.actions/dotnet-nuget-sleet/v1"
+      with:
+        DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
+        DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
+        SLEET_FEED_USERNAME: ${{ inputs.SLEET_FEED_USERNAME }}
+        SLEET_FEED_PASSWORD: ${{ inputs.SLEET_FEED_PASSWORD }}
+        CLEANUP: "true"
+
+    - name: Cleanup DotNet feed source with JFrog Artifactory
+      if: inputs.DOTNET_NUGET_STRATEGY == 'jfrog/v1'
+      uses: "./.actions/dotnet-nuget-jfrog/v1"
+      with:
+        CLEANUP: "true"

@@ -1,0 +1,144 @@
+name: Container V1 Composite Action
+description: Build, Test and Package a Container
+inputs:
+  CONTAINER_BUILD_STRATEGY:
+    required: false
+    description: |
+      The container build strategy to use.
+      Possible Values:
+      - dockercli/v1: Use docker cli build commands to build and push images
+      - dockercompose/v1: Use docker compose to build images
+
+  CONTAINER_APP_VERSION:
+    required: false
+    description: |
+      The version number of the container
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+    default: UNVERSIONED
+
+  CONTAINER_DOCKERFILE_PATH:
+    required: false
+    description: |
+      The relative path to the Dockerfile that should be built
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+    default: ./Dockerfile
+
+  CONTAINER_DOCKER_BUILD_CONTEXT:
+    required: false
+    description: |
+      The file path that the docker build command should execute in as a context. For more details, please read https://docs.docker.com/engine/reference/commandline/build/#extended-description
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+    default: ./
+
+  CONTAINER_AWS_REGION:
+    required: false
+    description: |
+      The aws region where the ECR resides
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+    default: us-west-2
+
+  CONTAINER_AWS_REGISTRY_HOST:
+    required: false
+    description: |
+      The FQDN of the host where the AWS Registry is running
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+    default: "883851127566.dkr.ecr.us-west-2.amazonaws.com"
+
+  CONTAINER_AWS_REPO_NAME:
+    required: false
+    description: |
+      The name of the container registry repo for this app in AWS ECR
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+    default: CONTAINER_AWS_REPO_NAME_DEFAULT
+
+  CONTAINER_AZURE_REGISTRY_HOST:
+    required: false
+    description: |
+      The FQDN of the host where the Azure Registry is running
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+    default: "bestbuyhealth.azurecr.io"
+
+  CONTAINER_AZURE_REPO_NAME:
+    required: false
+    description: |
+      The name of the container registry repo for this app in ACR
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+    default: CONTAINER_AZURE_REPO_NAME_DEFAULT
+    
+  DEPLOY_BRANCH:
+    required: true
+    description: |
+      A boolean value that indicates whether or not 
+      to publish the container image and makes a deploy
+      Used when:
+      - Deploy Job
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+
+  ACR_USERNAME:
+    required: true
+    description: |
+      The username of the Azure Container Registry
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+
+  ACR_PASSWORD:
+    required: true
+    description: |
+      The password of the Azure Container Registry
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+
+  CONTAINER_AWS_IMAGE_NAME:
+    required: true
+    description: |
+      The container name to push to AWS Registry
+
+  CONTAINER_AZURE_IMAGE_NAME:
+    required: true
+    description: |
+      The container name to push to Azure Registry
+runs:
+  using: "composite"
+  steps:
+
+    - name: Build Container using docker cli
+      if: inputs.CONTAINER_BUILD_STRATEGY == 'docker-cli/v1'
+      uses: "./.actions/container-build-docker-cli/v1"
+      with:
+        DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
+        CONTAINER_BUILD_STRATEGY: ${{ inputs.CONTAINER_BUILD_STRATEGY }}
+        CONTAINER_AWS_IMAGE_NAME: ${{ env.CONTAINER_AWS_IMAGE_NAME }}
+        CONTAINER_AZURE_IMAGE_NAME: ${{ env.CONTAINER_AZURE_IMAGE_NAME }}
+        CONTAINER_DOCKERFILE_PATH: ${{ inputs.CONTAINER_DOCKERFILE_PATH }}
+        CONTAINER_DOCKER_BUILD_CONTEXT: ${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}
+        CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}
+        CONTAINER_AWS_REGISTRY_HOST: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}
+        CONTAINER_AZURE_REGISTRY_HOST: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}
+        ACR_USERNAME: ${{ inputs.ACR_USERNAME }}
+        ACR_PASSWORD: ${{ inputs.ACR_PASSWORD }}
+
+    - name: Build Container using docker compose
+      if: inputs.CONTAINER_BUILD_STRATEGY == 'docker-compose/v1'
+      uses: "./.actions/container-build-docker-cli/v1"
+      with:
+        DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
+        CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
+        CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}
+        CONTAINER_AWS_REGISTRY_HOST: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}
+        CONTAINER_AZURE_REGISTRY_HOST: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}
+        ACR_USERNAME: ${{ inputs.ACR_USERNAME }}
+        ACR_PASSWORD: ${{ inputs.ACR_PASSWORD }}

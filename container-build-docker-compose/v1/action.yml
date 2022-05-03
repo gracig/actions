@@ -1,0 +1,69 @@
+name: Container Build with Docker Compose V1 Composite Action
+description: Build, Test and Package a Container using Docker Compose
+inputs:
+  DEPLOY_BRANCH:
+    required: true
+    description: |
+      A boolean value that indicates whether or not 
+      to publish the container image and makes a deploy
+  CONTAINER_APP_VERSION:
+    required: true
+    description: |
+      The version number of the container
+  CONTAINER_AWS_REGION:
+    required: true
+    description: |
+      The aws region where the ECR resides
+  CONTAINER_AWS_REGISTRY_HOST:
+    required: true
+    description: |
+      The FQDN of the host where the AWS Registry is running
+  CONTAINER_AZURE_REGISTRY_HOST:
+    required: true
+    description: |
+      The FQDN of the host where the Azure Registry is running
+  ACR_USERNAME:
+    required: true
+    description: |
+      The username of the Azure Container Registry
+  ACR_PASSWORD:
+    required: true
+    description: |
+      The password of the Azure Container Registry
+runs:
+  using: "composite"
+  steps:
+    - name: Build image(s)
+      shell: bash
+      run: docker-compose build --build-arg VERSION="${{ inputs.CONTAINER_APP_VERSION }}"
+    - name: Push to ECR
+      if: inputs.DEPLOY_BRANCH
+      shell: bash
+      run: |
+        aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
+          docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
+        for IMAGE in $(docker-compose config | yq -r '.services[] | select(.build) | .image')
+        do
+          docker tag "$IMAGE" "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
+          docker push "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
+        done
+    - name: Push to ACR
+      if: inputs.DEPLOY_BRANCH
+      shell: bash
+      run: |
+        docker login --username "${{ secrets.ACR_USERNAME }}" --password "${{ secrets.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        for IMAGE in $(docker-compose config | yq -r '.services[] | select(.build) | .image')
+        do
+          docker tag "$IMAGE" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/$IMAGE"
+          docker push "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/$IMAGE"
+        done
+    - name: Remove images
+      if: always()
+      shell: bash
+      run: |
+        docker-compose config | yq -r '.services[] | select(.build) |
+          "\(.image)
+            ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/\(.image)
+            ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/\(.image)
+          "' |
+        xargs docker rmi -f

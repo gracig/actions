@@ -1,0 +1,35 @@
+name: ArgoCD Deploy V1 Composite Action
+description: Deploy on Kubernetes using ArgoCD and ENV_REPO 
+inputs:
+  ENV_REPO:
+    required: true
+    type: string
+    description: |
+      Name of the infrastructure ENV repo that contains
+      the kustomize code to deploy on kubernetes and 
+  CONTAINER_APP_VERSION:
+    required: true
+    type: string
+    description: |
+      The version number of the container
+  ARGOCD_APP_NAME:
+    required: true
+    type: string
+    description: |
+      The name of the app in ArgoCD
+  ENV_REPO_TOKEN:
+    required: true
+    description: |
+      Token necessary to communicate with env repo for triggering ArgoCD updates
+runs:
+  using: "composite"
+  steps:
+    - name: Invoke remote env repo deploy workflow
+      uses: convictional/trigger-workflow-and-wait@v1.6.0
+      with:
+        owner: BBY-Health
+        repo: ${{ inputs.ENV_REPO }}
+        workflow_file_name: deploy.yaml
+        github_token: ${{ inputs.ENV_REPO_TOKEN }}
+        client_payload: '{"image_tag": "${{ inputs.CONTAINER_APP_VERSION }}", "argocd_app": "${{ inputs.ARGOCD_APP_NAME }}", "commit_ref": "${{ github.sha }}"}'
+        wait_workflow: true

@@ -1,0 +1,48 @@
+name: Dotnet Nuget Sleet Action
+description: Configures nuget feed source with sleet
+inputs:
+  DOTNET_NUGET_SLEET_FEED_HOST:
+    required: true
+    description: |
+      The sleet host to query and download dotnet packages
+      Possible Values:
+      - any valid sleet host
+  DOTNET_NUGET_SLEET_FEED_NAMES:
+    required: true
+    description: |
+      The feed names on the host to query packages.
+      Could be a list separated by white spaces
+      Possible Values:
+      - LibNugetFeed
+      - CCRFeed
+  SLEET_FEED_USERNAME:
+    required: true
+    description: |
+      The sleet username when using sleet nuget strategy
+  SLEET_FEED_PASSWORD:
+    required: true
+    description: |
+      The sleet password when using sleet nuget strategy
+  CLEANUP:
+    required: true
+    description: |
+      The sleet password when using sleet nuget strategy
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - name: Configure nuget feed sources with sleet
+      if: inputs.SLEET_CLEANUP == 'false'
+      shell: bash
+      run: |
+        echo 'Regarding store-password-in-clear-text, see https://github.com/NuGet/Home/issues/1851#issue-122862259'
+        for FEED in "${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}"; do
+          dotnet nuget add source "${{ inputs.SLEET_FEED_HOST }}/$FEED/index.json" --name "$FEED" -u "${{ secrets.SLEET_FEED_USERNAME }}" -p "${{ secrets.SLEET_FEED_PASSWORD }}" --store-password-in-clear-text
+        done
+    - name: Cleanup nuget feed sources with sleet
+      if: inputs.SLEET_CLEANUP == 'true'
+      shell: bash
+      run: |
+        for FEED in "${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}"; do
+          dotnet nuget remove source "$FEED"
+        done

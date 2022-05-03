@@ -1,0 +1,69 @@
+name: Container Build with Docker Cli V1 Composite Action
+description: Build, Test and Package a Container using Docker CLI
+inputs:
+  CONTAINER_DOCKERFILE_PATH:
+    required: true
+    description: |
+      The relative path to the Dockerfile that should be built
+  CONTAINER_DOCKER_BUILD_CONTEXT:
+    required: true
+    description: |
+      The file path that the docker build command should execute in as a context. For more details, please read https://docs.docker.com/engine/reference/commandline/build/#extended-description
+      Used when:
+      - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+  CONTAINER_AWS_REGION:
+    required: true
+    description: |
+      The aws region where the ECR resides
+  CONTAINER_AWS_REGISTRY_HOST:
+    required: true
+    description: |
+      The FQDN of the host where the AWS Registry is running
+  CONTAINER_AZURE_REGISTRY_HOST:
+    required: true
+    description: |
+      The FQDN of the host where the Azure Registry is running
+  DEPLOY_BRANCH:
+    required: true
+    description: |
+      A boolean value that indicates whether or not 
+      to publish the container image and makes a deploy
+  ACR_USERNAME:
+    required: true
+    description: |
+      The username of the Azure Container Registry
+  ACR_PASSWORD:
+    required: true
+    description: |
+      The password of the Azure Container Registry
+  CONTAINER_AWS_IMAGE_NAME:
+    required: true
+    description: |
+      The container name to push to AWS Registry
+  CONTAINER_AZURE_IMAGE_NAME:
+    required: true
+    description: |
+      The container name to push to Azure Registry
+runs:
+  using: "composite"
+  steps:
+    - name: Build image
+      shell: bash
+      run: docker build -f "${{ inputs.CONTAINER_DOCKERFILE_PATH }}" -t "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" -t "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}" "${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}"
+    - name: Push to ECR
+      if: inputs.DEPLOY_BRANCH
+      shell: bash
+      run: |
+        aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
+          docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
+        docker push "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}"
+    - name: Push to ACR
+      if: inputs.DEPLOY_BRANCH
+      shell: bash
+      run: |
+        docker login --username "${{ secrets.ACR_USERNAME }}" --password "${{ secrets.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
+    - name: Remove images
+      if: always()
+      shell: bash
+      run: docker rmi -f "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"

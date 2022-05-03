@@ -1,0 +1,63 @@
+name: Dotnet V1 Action
+description: Build, Test and Package a Dotnet application
+inputs:
+  DOTNET_SOLUTION_FILE:
+    required: true
+    description: |
+      The file path to the solution file of the app to build.
+
+  DOTNET_BUILD_CONFIGURATION:
+    required: true
+    description: |
+      Indicate the Build Configuration to run when
+      making a dotnet publish
+
+  DOTNET_APP_VERSION:
+    required: true
+    description: |
+      The version number of the dotnet application
+      Used when:
+
+  DOTNET_APP_PATH:
+    required: true
+    description: |
+      Indicates the file path to publish a dotnet application
+      That path may be referenced inside the Dockerfile
+
+  DOTNET_TEST_RESULTS_PATH:
+    required: true
+    description: |
+      Indicates the file path to publish a dotnet application
+      That path may be referenced inside the Dockerfile
+
+runs:
+  using: "composite"
+  steps:
+    - name: Dotnet clean
+      shell: bash
+      run: dotnet clean --nologo -v minimal "${{ inputs.DOTNET_SOLUTION_FILE }}"
+
+    - name: Dotnet restore
+      shell: bash
+      run: dotnet restore -v minimal "${{ inputs.DOTNET_SOLUTION_FILE }}"
+
+    - name: Dotnet build
+      shell: bash
+      run: dotnet build --nologo --no-restore -v minimal "${{ inputs.DOTNET_SOLUTION_FILE }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" -p:Version="${{ inputs.DOTNET_APP_VERSION }}"
+
+    - name: Dotnet test
+      shell: bash
+      run: dotnet test --nologo --no-build -v minimal "${{ inputs.DOTNET_SOLUTION_FILE }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" --logger trx -r "${{ inputs.DOTNET_TEST_RESULTS_PATH }}"
+
+    - name: Save test results
+      shell: bash
+      uses: actions/upload-artifact@v2
+      with:
+        name: dotnet-test-results
+        path: ${{ inputs.DOTNET_TEST_RESULTS_PATH }}
+
+    - name: Run dotnet publish
+      shell: bash
+      run: |
+        rm -rf publish
+        dotnet publish --nologo --no-build -v minimal "${{ inputs.DOTNET_APP_PATH }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" -o "publish"

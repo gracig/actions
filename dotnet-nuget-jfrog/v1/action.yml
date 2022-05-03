@@ -1,0 +1,22 @@
+name: Dotnet Nuget Jfrog Action
+description: Configures nuget feed source with JFROG
+inputs:
+  CLEANUP:
+    required: true
+    description: |
+      The sleet password when using sleet nuget strategy
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure nuget feed sources with Jfrog
+      if: inputs.SLEET_CLEANUP == 'false'
+      shell: bash
+      run: |
+        echo JFrog as a Nuget feed is not implemented yet
+    - name: Cleanup nuget feed sources with Jfrog
+      if: inputs.SLEET_CLEANUP == 'true'
+      shell: bash
+      run: |
+        echo JFrog as a Nuget feed is not implemented yet
