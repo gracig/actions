@@ -20,310 +20,310 @@ on:
           - container/v1: Build container image
           - argocd-deploy/v1: Deploy on kubernetes using argocd and an ENV_REPO
 
-      DOTNET_SETUP_VERSION:
-        required: false
-        type: string
-        description: |
-          Choose the setup_dotnet action to use
-          Possible Values:
-          - v.1.7.2
-          - v.2.0.0
-          Used when:
-          - inputs.WORKFLOW_TAGS contains dotnet@v1
-        default: "v.1.7.2"
-
-      DOTNET_SDK_VERSION:
-        required: false
-        type: string
-        description: |
-          The desired version of the .NET SDK to be used 
-          when building the source code.
-          5.0.x Uses the latest version from the 5.0 channel
-          Used when:
-          - inputs.WORKFLOW_TAGS contains dotnet@v1
-        default: 5.0.x
-
-      DOTNET_NUGET_STRATEGY:
-        required: false
-        type: string
-        description: |
-          The nuget feed strategy to used.
-          Possible Values:
-          - sleet/v1: 
-            Description: Use sleet as nuget feed source
-            Requirements:
-            - inputs.DOTNET_NUGET_SLEET_FEED_HOST
-            - inputs.DOTNET_NUGET_SLEET_FEED_NAMES
-            - secrets.SLEET_FEED_USERNAME
-            - secrets.SLEET_FEED_PASSWORD
-          - jfrog/v1: Use JFrog Artifact as nuget feed source
-            Note: Jfrog is not implemented yet.
-          Used when:
-          - inputs.WORKFLOW_TAGS contains dotnet@v1
-        default: sleet/v1
-
-      DOTNET_NUGET_SLEET_FEED_HOST:
-        required: false
-        type: string
-        description: |
-          The sleet host to query and download dotnet packages
-          Possible Values:
-          - any valid sleet host
-          Used when:
-          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
-        default: "https://d264i66ars8gn3.cloudfront.net"
-
-      DOTNET_NUGET_SLEET_FEED_NAMES:
-        required: false
-        type: string
-        description: |
-          The feed names on the host to query packages.
-          Could be a list separated by white spaces
-          Possible Values:
-          - LibNugetFeed
-          - CCRFeed
-          Used when:
-          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
-        default: LibNugetFeed
-
-      DOTNET_BUILD_STRATEGY:
-        required: false
-        type: string
-        description: |
-          The build strategy to use
-          Possible Values:
-          - build/v1: 
-            Description: Do a simple build, test and publish
-            Requirements:
-            - inputs.DOTNET_SOLUTION_FILE
-            - inputs.DOTNET_BUILD_CONFIGURATION
-            - inputs.DOTNET_APP_VERSION
-            - env.DOTNET_TEST_RESULT_PATH
-          - jfrog/v1: Use JFrog Artifact as nuget feed source
-            Note: Jfrog is not implemented yet.
-          Used when:
-          - inputs.WORKFLOW_TAGS contains dotnet/v1
-        default: dotnet-build/v1
-
-      DOTNET_SOLUTION_FILE:
-        required: false
-        type: string
-        description: |
-          The file path to the solution file of the app to build.
-          Used when:
-          - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: DOTNET_SOLUTION_FILE_DEFAULT
-
-      DOTNET_APP_VERSION:
-        required: false
-        type: string
-        description: |
-          The version number of the dotnet application
-          Used when:
-          - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: UNVERSIONED
-
-      DOTNET_APP_PATH:
-        required: false
-        type: string
-        description: |
-          Indicates the file path to publish a dotnet application
-          That path may be referenced inside the Dockerfile
-          Used when: 
-          - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: DOTNET_APP_PATH_DEFAULT
-
-      DOTNET_BUILD_CONFIGURATION:
-        required: false
-        type: string
-        description: |
-          Indicate the Build Configuration to run when
-          making a dotnet publish
-          Used when:
-          - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: "Release"
-
-      CONTAINER_BUILD_STRATEGY:
-        required: false
-        type: string
-        description: |
-          The container build strategy to use.
-          Possible Values:
-          - dockercli/v1:
-            Description: Use docker cli build commands to build and push images
-            Requirements:
-            - inputs.DEPLOY_BRANCH
-            - inputs.CONTAINER_APP_VERSION
-            - inputs.CONTAINER_DOCKERFILE_PATH
-            - inputs.CONTAINER_DOCKER_BUILD_CONTEXT
-            - inputs.CONTAINER_AWS_REGION
-            - inputs.CONTAINER_AWS_REGISTRY_HOST
-            - inputs.CONTAINER_AWS_REPO_NAME
-            - inputs.CONTAINER_AZURE_REGISTRY_HOST
-            - inputs.CONTAINER_AZURE_REPO_NAME
-            - secrets.ACR_USERNAME
-            - secrets.ACR_PASSWORD
-          - dockercompose/v1:
-            Description: Use docker compose to build images
-            Requirements:
-            - inputs.DEPLOY_BRANCH
-            - inputs.APP_VERSION
-            - inputs.CONTAINER_AWS_REGION
-            - inputs.CONTAINER_AWS_REGISTRY_HOST
-            - inputs.CONTAINER_AZURE_REGISTRY_HOST
-            - secrets.ACR_USERNAME
-            - secrets.ACR_PASSWORD
-
-      CONTAINER_APP_VERSION:
-        required: false
-        type: string
-        description: |
-          The version number of the container
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-        default: UNVERSIONED
-
-      CONTAINER_DOCKERFILE_PATH:
-        required: false
-        type: string
-        description: |
-          The relative path to the Dockerfile that should be built
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-        default: ./Dockerfile
-
-      CONTAINER_DOCKER_BUILD_CONTEXT:
-        required: false
-        type: string
-        description: |
-          The file path that the docker build command should execute in as a context. For more details, please read https://docs.docker.com/engine/reference/commandline/build/#extended-description
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-        default: ./
-
-      CONTAINER_AWS_REGION:
-        required: false
-        type: string
-        description: |
-          The aws region where the ECR resides
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-        default: us-west-2
-
-      CONTAINER_AWS_REGISTRY_HOST:
-        required: false
-        type: string
-        description: |
-          The FQDN of the host where the AWS Registry is running
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-        default: "883851127566.dkr.ecr.us-west-2.amazonaws.com"
-
-      CONTAINER_AWS_REPO_NAME:
-        required: false
-        type: string
-        description: |
-          The name of the container registry repo for this app in AWS ECR
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-        default: CONTAINER_AWS_REPO_NAME_DEFAULT
-
-      CONTAINER_AZURE_REGISTRY_HOST:
-        required: false
-        type: string
-        description: |
-          The FQDN of the host where the Azure Registry is running
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-        default: "bestbuyhealth.azurecr.io"
-
-      CONTAINER_AZURE_REPO_NAME:
-        required: false
-        type: string
-        description: |
-          The name of the container registry repo for this app in ACR
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-        default: CONTAINER_AZURE_REPO_NAME_DEFAULT
-        
-      DEPLOY_BRANCH:
-        required: true
-        type: boolean
-        description: |
-          A boolean value that indicates whether or not 
-          to publish the container image and makes a deploy
-          Used when:
-          - Deploy Job
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-        default: false
-
-      ENV_REPO:
-        required: true
-        type: string
-        description: |
-          Name of the infrastructure ENV repo that contains
-          the kustomize code to deploy on kubernetes and 
-          is used by ArgoCD
-          Used when:
-          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
-
-      ARGOCD_APP_NAME:
-        required: false
-        type: string
-        description: |
-          The name of the app in ArgoCD
-          Used when:
-          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
-        default: ARGOCD_APP_NAME
-
-    secrets:
-      ACR_USERNAME:
-        required: true
-        description: |
-          The username of the Azure Container Registry
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-
-      ACR_PASSWORD:
-        required: true
-        description: |
-          The password of the Azure Container Registry
-          Used when:
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
-          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-          
-      SLEET_FEED_USERNAME:
-        required: false
-        description: |
-          The username for the sleet repository
-          Used when:
-          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
-      
-      SLEET_FEED_PASSWORD:
-        required: false
-        description: |
-          The password for the sleet repository
-          Used when:
-          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
-
-      ENV_REPO_TOKEN:
-        required: true
-        description: |
-          Token necessary to communicate with env repo for triggering ArgoCD updates
-          Used when:
-          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
-
-env:
-  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
-  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
-  DOTNET_TEST_RESULTS_PATH: ${{ github.workspace }}/artifacts/test-results
-
+#      DOTNET_SETUP_VERSION:
+#        required: false
+#        type: string
+#        description: |
+#          Choose the setup_dotnet action to use
+#          Possible Values:
+#          - v.1.7.2
+#          - v.2.0.0
+#          Used when:
+#          - inputs.WORKFLOW_TAGS contains dotnet@v1
+#        default: "v.1.7.2"
+#
+#      DOTNET_SDK_VERSION:
+#        required: false
+#        type: string
+#        description: |
+#          The desired version of the .NET SDK to be used 
+#          when building the source code.
+#          5.0.x Uses the latest version from the 5.0 channel
+#          Used when:
+#          - inputs.WORKFLOW_TAGS contains dotnet@v1
+#        default: 5.0.x
+#
+#      DOTNET_NUGET_STRATEGY:
+#        required: false
+#        type: string
+#        description: |
+#          The nuget feed strategy to used.
+#          Possible Values:
+#          - sleet/v1: 
+#            Description: Use sleet as nuget feed source
+#            Requirements:
+#            - inputs.DOTNET_NUGET_SLEET_FEED_HOST
+#            - inputs.DOTNET_NUGET_SLEET_FEED_NAMES
+#            - secrets.SLEET_FEED_USERNAME
+#            - secrets.SLEET_FEED_PASSWORD
+#          - jfrog/v1: Use JFrog Artifact as nuget feed source
+#            Note: Jfrog is not implemented yet.
+#          Used when:
+#          - inputs.WORKFLOW_TAGS contains dotnet@v1
+#        default: sleet/v1
+#
+#      DOTNET_NUGET_SLEET_FEED_HOST:
+#        required: false
+#        type: string
+#        description: |
+#          The sleet host to query and download dotnet packages
+#          Possible Values:
+#          - any valid sleet host
+#          Used when:
+#          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+#        default: "https://d264i66ars8gn3.cloudfront.net"
+#
+#      DOTNET_NUGET_SLEET_FEED_NAMES:
+#        required: false
+#        type: string
+#        description: |
+#          The feed names on the host to query packages.
+#          Could be a list separated by white spaces
+#          Possible Values:
+#          - LibNugetFeed
+#          - CCRFeed
+#          Used when:
+#          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+#        default: LibNugetFeed
+#
+#      DOTNET_BUILD_STRATEGY:
+#        required: false
+#        type: string
+#        description: |
+#          The build strategy to use
+#          Possible Values:
+#          - build/v1: 
+#            Description: Do a simple build, test and publish
+#            Requirements:
+#            - inputs.DOTNET_SOLUTION_FILE
+#            - inputs.DOTNET_BUILD_CONFIGURATION
+#            - inputs.DOTNET_APP_VERSION
+#            - env.DOTNET_TEST_RESULT_PATH
+#          - jfrog/v1: Use JFrog Artifact as nuget feed source
+#            Note: Jfrog is not implemented yet.
+#          Used when:
+#          - inputs.WORKFLOW_TAGS contains dotnet/v1
+#        default: dotnet-build/v1
+#
+#      DOTNET_SOLUTION_FILE:
+#        required: false
+#        type: string
+#        description: |
+#          The file path to the solution file of the app to build.
+#          Used when:
+#          - inputs.DOTNET_BUILD_STRATEGY == build/v1
+#        default: DOTNET_SOLUTION_FILE_DEFAULT
+#
+#      DOTNET_APP_VERSION:
+#        required: false
+#        type: string
+#        description: |
+#          The version number of the dotnet application
+#          Used when:
+#          - inputs.DOTNET_BUILD_STRATEGY == build/v1
+#        default: UNVERSIONED
+#
+#      DOTNET_APP_PATH:
+#        required: false
+#        type: string
+#        description: |
+#          Indicates the file path to publish a dotnet application
+#          That path may be referenced inside the Dockerfile
+#          Used when: 
+#          - inputs.DOTNET_BUILD_STRATEGY == build/v1
+#        default: DOTNET_APP_PATH_DEFAULT
+#
+#      DOTNET_BUILD_CONFIGURATION:
+#        required: false
+#        type: string
+#        description: |
+#          Indicate the Build Configuration to run when
+#          making a dotnet publish
+#          Used when:
+#          - inputs.DOTNET_BUILD_STRATEGY == build/v1
+#        default: "Release"
+#
+#      CONTAINER_BUILD_STRATEGY:
+#        required: false
+#        type: string
+#        description: |
+#          The container build strategy to use.
+#          Possible Values:
+#          - dockercli/v1:
+#            Description: Use docker cli build commands to build and push images
+#            Requirements:
+#            - inputs.DEPLOY_BRANCH
+#            - inputs.CONTAINER_APP_VERSION
+#            - inputs.CONTAINER_DOCKERFILE_PATH
+#            - inputs.CONTAINER_DOCKER_BUILD_CONTEXT
+#            - inputs.CONTAINER_AWS_REGION
+#            - inputs.CONTAINER_AWS_REGISTRY_HOST
+#            - inputs.CONTAINER_AWS_REPO_NAME
+#            - inputs.CONTAINER_AZURE_REGISTRY_HOST
+#            - inputs.CONTAINER_AZURE_REPO_NAME
+#            - secrets.ACR_USERNAME
+#            - secrets.ACR_PASSWORD
+#          - dockercompose/v1:
+#            Description: Use docker compose to build images
+#            Requirements:
+#            - inputs.DEPLOY_BRANCH
+#            - inputs.APP_VERSION
+#            - inputs.CONTAINER_AWS_REGION
+#            - inputs.CONTAINER_AWS_REGISTRY_HOST
+#            - inputs.CONTAINER_AZURE_REGISTRY_HOST
+#            - secrets.ACR_USERNAME
+#            - secrets.ACR_PASSWORD
+#
+#      CONTAINER_APP_VERSION:
+#        required: false
+#        type: string
+#        description: |
+#          The version number of the container
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#        default: UNVERSIONED
+#
+#      CONTAINER_DOCKERFILE_PATH:
+#        required: false
+#        type: string
+#        description: |
+#          The relative path to the Dockerfile that should be built
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#        default: ./Dockerfile
+#
+#      CONTAINER_DOCKER_BUILD_CONTEXT:
+#        required: false
+#        type: string
+#        description: |
+#          The file path that the docker build command should execute in as a context. For more details, please read https://docs.docker.com/engine/reference/commandline/build/#extended-description
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#        default: ./
+#
+#      CONTAINER_AWS_REGION:
+#        required: false
+#        type: string
+#        description: |
+#          The aws region where the ECR resides
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#        default: us-west-2
+#
+#      CONTAINER_AWS_REGISTRY_HOST:
+#        required: false
+#        type: string
+#        description: |
+#          The FQDN of the host where the AWS Registry is running
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#        default: "883851127566.dkr.ecr.us-west-2.amazonaws.com"
+#
+#      CONTAINER_AWS_REPO_NAME:
+#        required: false
+#        type: string
+#        description: |
+#          The name of the container registry repo for this app in AWS ECR
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#        default: CONTAINER_AWS_REPO_NAME_DEFAULT
+#
+#      CONTAINER_AZURE_REGISTRY_HOST:
+#        required: false
+#        type: string
+#        description: |
+#          The FQDN of the host where the Azure Registry is running
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#        default: "bestbuyhealth.azurecr.io"
+#
+#      CONTAINER_AZURE_REPO_NAME:
+#        required: false
+#        type: string
+#        description: |
+#          The name of the container registry repo for this app in ACR
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#        default: CONTAINER_AZURE_REPO_NAME_DEFAULT
+#        
+#      DEPLOY_BRANCH:
+#        required: true
+#        type: boolean
+#        description: |
+#          A boolean value that indicates whether or not 
+#          to publish the container image and makes a deploy
+#          Used when:
+#          - Deploy Job
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#        default: false
+#
+#      ENV_REPO:
+#        required: true
+#        type: string
+#        description: |
+#          Name of the infrastructure ENV repo that contains
+#          the kustomize code to deploy on kubernetes and 
+#          is used by ArgoCD
+#          Used when:
+#          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
+#
+#      ARGOCD_APP_NAME:
+#        required: false
+#        type: string
+#        description: |
+#          The name of the app in ArgoCD
+#          Used when:
+#          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
+#        default: ARGOCD_APP_NAME
+#
+#    secrets:
+#      ACR_USERNAME:
+#        required: true
+#        description: |
+#          The username of the Azure Container Registry
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#
+#      ACR_PASSWORD:
+#        required: true
+#        description: |
+#          The password of the Azure Container Registry
+#          Used when:
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
+#          - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
+#          
+#      SLEET_FEED_USERNAME:
+#        required: false
+#        description: |
+#          The username for the sleet repository
+#          Used when:
+#          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+#      
+#      SLEET_FEED_PASSWORD:
+#        required: false
+#        description: |
+#          The password for the sleet repository
+#          Used when:
+#          - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
+#
+#      ENV_REPO_TOKEN:
+#        required: true
+#        description: |
+#          Token necessary to communicate with env repo for triggering ArgoCD updates
+#          Used when:
+#          - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
+#
+#env:
+#  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
+#  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
+#  DOTNET_TEST_RESULTS_PATH: ${{ github.workspace }}/artifacts/test-results
+#
 jobs:
   build:
     runs-on: [self-hosted, linux]
