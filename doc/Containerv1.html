@@ -1,0 +1,121 @@
+<html>
+<head><title>Image map created by yEd</title>
+<style type="text/css">
+.tooltip {
+  font-size:10pt;
+  background-color:#FFFFCC;
+  border:1px solid black;
+  padding:2px
+}
+</style>
+<style type="text/css">
+.tooltip {
+  position:absolute;
+  display:none
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+tooltip = null;
+document.onmousemove = updateTooltip;
+function updateTooltip(e) {
+try {
+if (document.all) {
+if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+x = document.documentElement.scrollLeft + window.event.x;
+y = document.documentElement.scrollTop + window.event.y;
+}
+else { // all other Explorers
+x = document.body.scrollLeft + window.event.x;
+y = document.body.scrollTop + window.event.y;
+}
+}
+else {
+x = e.pageX;
+y = e.pageY;
+}
+if (tooltip != null) {
+o = 20;
+var sx, sy;
+if (self.pageYOffset) { // all except Explorer
+sx = self.pageXOffset;
+sy = self.pageYOffset;
+}
+else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+sx = document.documentElement.scrollLeft;
+sy = document.documentElement.scrollTop;
+}
+else if (document.body) { // all other Explorers
+sx = document.body.scrollLeft;
+sy = document.body.scrollTop;
+}
+t = y + o + tooltip.offsetHeight;
+w = sy + document.body.clientHeight;
+if (t > w) {
+y = y - o - tooltip.offsetHeight;
+}
+else {
+y = y + o;
+}
+t = x + o + tooltip.offsetWidth;
+w = sx + document.body.clientWidth;
+if (t > w) {
+x = x - o - tooltip.offsetWidth;
+}
+else {
+x = x + o;
+}
+if ((tooltip.style.top == '' || tooltip.style.top == 0) && (tooltip.style.left == '' || tooltip.style.left == 0))
+{
+tooltip.style.width = tooltip.offsetWidth + 'px';
+tooltip.style.height = tooltip.offsetHeight + 'px';
+}
+tooltip.style.left = x + "px";
+tooltip.style.top = y + "px";
+}
+} catch (error) { error = null; }
+}
+function showTooltip(id) {
+try {
+tooltip = document.getElementById(id);
+tooltip.style.display = "block";
+} catch (error) { error = null; }
+}
+function hideTooltip() {
+try {
+tooltip.style.display = "none";
+} catch (error) { error = null; }
+}
+</script>
+
+<div class="tooltip" id="n0">Start</div>
+<div class="tooltip" id="n2">DEPLOY_BRANCH<br>CONTAINER_BUILD_STRATEGY<br>CONTAINER_AWS_IMAGE_NAME<br>CONTAINER_AZURE_IMAGE_NAME<br>CONTAINER_DOCKERFILE_PATH<br>CONTAINER_DOCKER_BUILD_CONTEXT<br>CONTAINER_AWS_REGION<br>CONTAINER_AWS_REGISTRY_HOST<br>CONTAINER_AZURE_REGISTRY_HOST<br>ACR_USERNAME<br>ACR_PASSWORD<br></div>
+<div class="tooltip" id="n5">Diagram: container/v1 action<br>Author:    Gerson Graciani <ggraciani@fpcomplete.com><br>Date:       2022-05-03<br><br>Describe the required steps to build a Docker container<br> using docker build command</div>
+<div class="tooltip" id="n7">./.actions/container-build-docker-cli/v1</div>
+<div class="tooltip" id="n8">./.actions/container-build-docker-compose/v1</div>
+<div class="tooltip" id="n10">DEPLOY_BRANCH<br>CONTAINER_APP_VERSION<br>CONTAINER_AWS_REGION<br>CONTAINER_AWS_REGISTRY_HOST<br>CONTAINER_AZURE_REGISTRY_HOST<br>ACR_USERNAME<br>ACR_PASSWORD</div>
+<div class="tooltip" id="e4">CONTAINER_BUILD_STRATEGY<br>is dockercli/v1</div>
+<div class="tooltip" id="e7">CONTAINER_BUILD_STRATEGY<br>is dockercompose/v1</div>
+
+<map name="image1_1">
+  <area shape="poly" coords="476,709,476,709,644,709,644,719,476,719,476,719" alt="" onmouseover="showTooltip('e7')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="441,685,441,685,441,375,441,374,441,374,442,370,442,369,443,368,445,365,445,363,446,363,449,361,450,360,451,360,456,360,456,360,456,360,657,360,657,370,456,370,456,365,457,370,453,370,452,365,455,370,451,371,449,367,453,370,451,373,447,370,452,371,451,375,446,375,451,375,451,685,451,685" alt="" onmouseover="showTooltip('e4')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="685,432,943,546" alt="" onmouseover="showTooltip('n10')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="655,689,973,739" href="ContainerBuildDockerComposev1.html" alt="" onmouseover="showTooltip('n8')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="668,337,961,392" href="ContainerBuildDockerCliv1.html" alt="" onmouseover="showTooltip('n7')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="15,769,384,920" alt="" onmouseover="showTooltip('n5')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="685,15,943,194" alt="" onmouseover="showTooltip('n2')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="184,699,214,729" alt="" onmouseover="showTooltip('n0')" onmouseout="hideTooltip()"/>
+</map>
+
+
+    <table class="yimagetable" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td><img class="yimage" src="Containerv11_1.png" usemap="#image1_1" border="0" alt=""/></td>
+      </tr>
+    </table>
+
+</body>
+</html>

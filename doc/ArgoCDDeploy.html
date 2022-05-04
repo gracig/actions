@@ -1,0 +1,137 @@
+<html>
+<head><title>Image map created by yEd</title>
+<style type="text/css">
+.tooltip {
+  font-size:10pt;
+  background-color:#FFFFCC;
+  border:1px solid black;
+  padding:2px
+}
+</style>
+<style type="text/css">
+.tooltip {
+  position:absolute;
+  display:none
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+tooltip = null;
+document.onmousemove = updateTooltip;
+function updateTooltip(e) {
+try {
+if (document.all) {
+if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+x = document.documentElement.scrollLeft + window.event.x;
+y = document.documentElement.scrollTop + window.event.y;
+}
+else { // all other Explorers
+x = document.body.scrollLeft + window.event.x;
+y = document.body.scrollTop + window.event.y;
+}
+}
+else {
+x = e.pageX;
+y = e.pageY;
+}
+if (tooltip != null) {
+o = 20;
+var sx, sy;
+if (self.pageYOffset) { // all except Explorer
+sx = self.pageXOffset;
+sy = self.pageYOffset;
+}
+else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+sx = document.documentElement.scrollLeft;
+sy = document.documentElement.scrollTop;
+}
+else if (document.body) { // all other Explorers
+sx = document.body.scrollLeft;
+sy = document.body.scrollTop;
+}
+t = y + o + tooltip.offsetHeight;
+w = sy + document.body.clientHeight;
+if (t > w) {
+y = y - o - tooltip.offsetHeight;
+}
+else {
+y = y + o;
+}
+t = x + o + tooltip.offsetWidth;
+w = sx + document.body.clientWidth;
+if (t > w) {
+x = x - o - tooltip.offsetWidth;
+}
+else {
+x = x + o;
+}
+if ((tooltip.style.top == '' || tooltip.style.top == 0) && (tooltip.style.left == '' || tooltip.style.left == 0))
+{
+tooltip.style.width = tooltip.offsetWidth + 'px';
+tooltip.style.height = tooltip.offsetHeight + 'px';
+}
+tooltip.style.left = x + "px";
+tooltip.style.top = y + "px";
+}
+} catch (error) { error = null; }
+}
+function showTooltip(id) {
+try {
+tooltip = document.getElementById(id);
+tooltip.style.display = "block";
+} catch (error) { error = null; }
+}
+function hideTooltip() {
+try {
+tooltip.style.display = "none";
+} catch (error) { error = null; }
+}
+</script>
+
+<div class="tooltip" id="n0">Start</div>
+<div class="tooltip" id="n2">Inputs:<br>ENV_REPO<br>ENV_REPO_TOKEN<br>APPVERSION<br>ARGOCD_APP_NAME<br>ARGOCD_WAIT</div>
+<div class="tooltip" id="n4"><br>convictional/trigger-workflow-and-wait@v1.6.0</div>
+<div class="tooltip" id="n8">Diagram: argocd-deploy@v1 Composite Action<br>Author:    Gerson Graciani <ggraciani@fpcomplete.com><br>Date:       2022-04-30<br><br>Describe the required steps to deploy application on argocd</div>
+<div class="tooltip" id="n9"><br>convictional/trigger-workflow-and-wait@v1.6.3</div>
+<div class="tooltip" id="n10">Inputs:<br>ENV_REPO<br>ENV_REPO_TOKEN<br>APPVERSION<br>ARGOCD_APP_NAME<br>ARGOCD_WAIT</div>
+<div class="tooltip" id="n11">Start ENV_REPO<br>deploy workflow</div>
+<div class="tooltip" id="n12">Query github actions API<br>about ENV_REPO<br>workflow status<br></div>
+<div class="tooltip" id="n14">wait for 10 seconds</div>
+<div class="tooltip" id="n16">Finalize Workflow</div>
+<div class="tooltip" id="n17">Start ENV_REPO deploy workflow</div>
+<div class="tooltip" id="n18">ENV_REPO Deploy</div>
+<div class="tooltip" id="e3">CONVICTIONAL_TRIGGER_VERSION == v1.6.3</div>
+<div class="tooltip" id="e6">CONVICTIONAL_TRIGGER_VERSION == v1.6.0</div>
+<div class="tooltip" id="e13">ENV_REPO workflow has finished</div>
+<div class="tooltip" id="e14">ENV_REPO workflow has not finished</div>
+
+<map name="image1_1">
+  <area shape="poly" coords="1726,395,1726,395,1726,388,1726,388,1726,387,1726,384,1727,383,1727,382,1729,380,1730,379,1731,379,1734,378,1735,377,1736,377,1740,377,1740,377,1741,377,2013,377,2013,382,2012,377,2020,376,2020,381,2018,377,2020,376,2023,380,2018,380,2018,378,2028,378,2028,380,2028,383,2025,384,2023,386,2022,386,2021,386,2013,387,2013,387,2013,387,1741,387,1741,382,1741,387,1737,387,1736,382,1738,387,1735,388,1733,383,1737,387,1735,389,1731,385,1736,387,1735,389,1731,388,1736,388,1736,395,1736,395" alt="" onmouseover="showTooltip('e14')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="1760,419,1760,419,1943,419,1943,429,1760,429,1760,429" alt="" onmouseover="showTooltip('e13')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="567,454,567,454,567,535,562,535,567,534,568,539,563,539,567,537,569,540,565,542,567,538,571,540,568,544,569,539,573,540,572,545,572,540,821,540,821,550,572,550,572,550,572,550,567,549,566,549,565,549,562,547,561,546,561,545,559,542,558,541,558,540,557,536,557,535,557,535,557,454,557,454" alt="" onmouseover="showTooltip('e6')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="557,395,557,395,557,362,557,361,557,361,558,357,558,356,559,355,561,352,561,351,562,350,565,348,566,348,567,348,572,347,572,347,572,347,821,347,821,357,572,357,572,352,573,357,569,357,568,352,571,357,567,359,565,354,569,357,567,360,563,357,568,358,567,363,562,362,567,362,567,395,567,395" alt="" onmouseover="showTooltip('e3')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="487,15,638,70" alt="" onmouseover="showTooltip('n18')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="221,27,251,57" alt="" onmouseover="showTooltip('n17')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1954,397,2091,452" alt="" onmouseover="showTooltip('n16')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2008,337,2038,367" alt="" onmouseover="showTooltip('n14')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1504,397,1678,452" alt="" onmouseover="showTooltip('n12')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1369,409,1399,439" alt="" onmouseover="showTooltip('n11')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="932,695,1082,809" alt="" onmouseover="showTooltip('n10')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="832,324,1182,379" alt="" onmouseover="showTooltip('n9')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="16,469,457,620" alt="" onmouseover="showTooltip('n8')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="832,517,1182,572" alt="" onmouseover="showTooltip('n4')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="932,87,1082,201" alt="" onmouseover="showTooltip('n2')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="221,409,251,439" alt="" onmouseover="showTooltip('n0')" onmouseout="hideTooltip()"/>
+</map>
+
+
+    <table class="yimagetable" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td><img class="yimage" src="ArgoCDDeploy1_1.png" usemap="#image1_1" border="0" alt=""/></td>
+      </tr>
+    </table>
+
+</body>
+</html>

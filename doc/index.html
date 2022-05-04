@@ -1,0 +1,139 @@
+<html>
+<head><title>Image map created by yEd</title>
+<style type="text/css">
+.tooltip {
+  font-size:10pt;
+  background-color:#FFFFCC;
+  border:1px solid black;
+  padding:2px
+}
+</style>
+<style type="text/css">
+.tooltip {
+  position:absolute;
+  display:none
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+tooltip = null;
+document.onmousemove = updateTooltip;
+function updateTooltip(e) {
+try {
+if (document.all) {
+if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+x = document.documentElement.scrollLeft + window.event.x;
+y = document.documentElement.scrollTop + window.event.y;
+}
+else { // all other Explorers
+x = document.body.scrollLeft + window.event.x;
+y = document.body.scrollTop + window.event.y;
+}
+}
+else {
+x = e.pageX;
+y = e.pageY;
+}
+if (tooltip != null) {
+o = 20;
+var sx, sy;
+if (self.pageYOffset) { // all except Explorer
+sx = self.pageXOffset;
+sy = self.pageYOffset;
+}
+else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+sx = document.documentElement.scrollLeft;
+sy = document.documentElement.scrollTop;
+}
+else if (document.body) { // all other Explorers
+sx = document.body.scrollLeft;
+sy = document.body.scrollTop;
+}
+t = y + o + tooltip.offsetHeight;
+w = sy + document.body.clientHeight;
+if (t > w) {
+y = y - o - tooltip.offsetHeight;
+}
+else {
+y = y + o;
+}
+t = x + o + tooltip.offsetWidth;
+w = sx + document.body.clientWidth;
+if (t > w) {
+x = x - o - tooltip.offsetWidth;
+}
+else {
+x = x + o;
+}
+if ((tooltip.style.top == '' || tooltip.style.top == 0) && (tooltip.style.left == '' || tooltip.style.left == 0))
+{
+tooltip.style.width = tooltip.offsetWidth + 'px';
+tooltip.style.height = tooltip.offsetHeight + 'px';
+}
+tooltip.style.left = x + "px";
+tooltip.style.top = y + "px";
+}
+} catch (error) { error = null; }
+}
+function showTooltip(id) {
+try {
+tooltip = document.getElementById(id);
+tooltip.style.display = "block";
+} catch (error) { error = null; }
+}
+function hideTooltip() {
+try {
+tooltip.style.display = "none";
+} catch (error) { error = null; }
+}
+</script>
+
+<div class="tooltip" id="n0">Git Push</div>
+<div class="tooltip" id="n2">Diagram: Best Buy Shared Workflow<br>Author:    Gerson Graciani <ggraciani@fpcomplete.com><br>Date:       2022-05-03</div>
+<div class="tooltip" id="n4">./.actions/argocd-deploy/v1</div>
+<div class="tooltip" id="n8">ENV_REPO<br>ENV_REPO_TOKEN<br>CONTAINER_APP_VERSION<br>ARGOCD_APP_NAME</div>
+<div class="tooltip" id="n9"><br>actions/checkout@v3<br>shared workflows</div>
+<div class="tooltip" id="n10">Shared workflow repo<br>will be saved in the .actions<br>directory.<br><br>Any action in that directory<br>must be accessed using the: ./.actions<br>prefix</div>
+<div class="tooltip" id="n11"><br>actions/checkout@v3<br>shared workflows</div>
+<div class="tooltip" id="n13">./.actions/dotnet/v1</div>
+<div class="tooltip" id="n15">./.actions/container/v1</div>
+<div class="tooltip" id="n17">DOTNET_BUILD_STRATEGY<br>DOTNET_SETUP_VERSION<br>DOTNET_SDK_VERSION<br>DOTNET_NUGET_STRATEGY<br>DOTNET_BUILD_CONFIGURATION<br>DOTNET_SOLUTION_FILE<br>DOTNET_APP_VERSION<br>DOTNET_APP_PATH<br>DOTNET_NUGET_SLEET_FEED_HOST<br>DOTNET_NUGET_SLEET_FEED_NAMES<br>DOTNET_TEST_RESULTS_PATH<br>SLEET_FEED_PASSWORD<br></div>
+<div class="tooltip" id="n19">DEPLOY_BRANCH<br>CONTAINER_BUILD_STRATEGY<br>CONTAINER_AWS_IMAGE_NAME<br>CONTAINER_AZURE_IMAGE_NAME<br>CONTAINER_APP_VERSION<br>CONTAINER_DOCKERFILE_PATH<br>CONTAINER_DOCKER_BUILD_CONTEXT<br>CONTAINER_AWS_REGION<br>CONTAINER_AWS_REGISTRY_HOST<br>CONTAINER_AWS_REPO_NAME<br>CONTAINER_AZURE_REGISTRY_HOST<br>CONTAINER_AZURE_REPO_NAME<br>ACR_USERNAME<br>ACR_PASSWORD</div>
+<div class="tooltip" id="n22"><br>actions/checkout@v3</div>
+<div class="tooltip" id="n23">Shared workflow repo<br>will be saved in the .actions<br>directory.<br><br>Any action in that directory<br>must be accessed using the: ./.actions<br>prefix</div>
+<div class="tooltip" id="e0">DEPLOY_BRANCH is true</div>
+<div class="tooltip" id="e4">WORKFLOW_TAGS<br>contains<br>argocd-deploy/v1</div>
+<div class="tooltip" id="e14">WORKFLOW_TAGS<br>contains<br>dotnet/v1</div>
+<div class="tooltip" id="e17">WORKFLOW_TAGS<br>contains<br>container/v1</div>
+
+<map name="image1_1">
+  <area shape="poly" coords="1435,487,1435,487,1539,487,1539,497,1435,497,1435,497" alt="" onmouseover="showTooltip('e17')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="945,487,945,487,1049,487,1049,497,945,497,945,497" alt="" onmouseover="showTooltip('e14')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="2374,463,2374,463,2374,374,2374,374,2374,374,2375,369,2375,368,2376,367,2378,364,2378,363,2379,363,2382,361,2383,360,2384,360,2389,359,2389,359,2389,359,2473,359,2473,369,2389,369,2389,364,2390,369,2386,370,2385,365,2388,369,2384,371,2382,367,2386,369,2384,373,2380,370,2385,371,2384,375,2379,374,2384,374,2384,463,2384,463" alt="" onmouseover="showTooltip('e4')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="1937,487,1937,487,2076,487,2076,497,1937,497,1937,497" alt="" onmouseover="showTooltip('e0')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="611,304,860,425" alt="" onmouseover="showTooltip('n23')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="425,465,571,520" alt="" onmouseover="showTooltip('n22')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1523,64,1766,289" alt="" onmouseover="showTooltip('n19')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1016,81,1265,272" alt="" onmouseover="showTooltip('n17')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1550,465,1739,520" href="Containerv1.html" alt="" onmouseover="showTooltip('n15')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1060,465,1221,520" href="Dotnetv1.html" alt="" onmouseover="showTooltip('n13')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="630,465,841,520" alt="" onmouseover="showTooltip('n11')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2068,562,2317,684" alt="" onmouseover="showTooltip('n10')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2087,465,2297,520" alt="" onmouseover="showTooltip('n9')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2508,15,2702,101" alt="" onmouseover="showTooltip('n8')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2484,337,2726,392" href="ArgoCDDeploy.html" alt="" onmouseover="showTooltip('n4')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="15,547,385,698" alt="" onmouseover="showTooltip('n2')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="185,477,215,507" alt="" onmouseover="showTooltip('n0')" onmouseout="hideTooltip()"/>
+</map>
+
+
+    <table class="yimagetable" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td><img class="yimage" src="index1_1.png" usemap="#image1_1" border="0" alt=""/></td>
+      </tr>
+    </table>
+
+</body>
+</html>

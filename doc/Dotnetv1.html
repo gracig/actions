@@ -1,0 +1,151 @@
+<html>
+<head><title>Image map created by yEd</title>
+<style type="text/css">
+.tooltip {
+  font-size:10pt;
+  background-color:#FFFFCC;
+  border:1px solid black;
+  padding:2px
+}
+</style>
+<style type="text/css">
+.tooltip {
+  position:absolute;
+  display:none
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+tooltip = null;
+document.onmousemove = updateTooltip;
+function updateTooltip(e) {
+try {
+if (document.all) {
+if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+x = document.documentElement.scrollLeft + window.event.x;
+y = document.documentElement.scrollTop + window.event.y;
+}
+else { // all other Explorers
+x = document.body.scrollLeft + window.event.x;
+y = document.body.scrollTop + window.event.y;
+}
+}
+else {
+x = e.pageX;
+y = e.pageY;
+}
+if (tooltip != null) {
+o = 20;
+var sx, sy;
+if (self.pageYOffset) { // all except Explorer
+sx = self.pageXOffset;
+sy = self.pageYOffset;
+}
+else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+sx = document.documentElement.scrollLeft;
+sy = document.documentElement.scrollTop;
+}
+else if (document.body) { // all other Explorers
+sx = document.body.scrollLeft;
+sy = document.body.scrollTop;
+}
+t = y + o + tooltip.offsetHeight;
+w = sy + document.body.clientHeight;
+if (t > w) {
+y = y - o - tooltip.offsetHeight;
+}
+else {
+y = y + o;
+}
+t = x + o + tooltip.offsetWidth;
+w = sx + document.body.clientWidth;
+if (t > w) {
+x = x - o - tooltip.offsetWidth;
+}
+else {
+x = x + o;
+}
+if ((tooltip.style.top == '' || tooltip.style.top == 0) && (tooltip.style.left == '' || tooltip.style.left == 0))
+{
+tooltip.style.width = tooltip.offsetWidth + 'px';
+tooltip.style.height = tooltip.offsetHeight + 'px';
+}
+tooltip.style.left = x + "px";
+tooltip.style.top = y + "px";
+}
+} catch (error) { error = null; }
+}
+function showTooltip(id) {
+try {
+tooltip = document.getElementById(id);
+tooltip.style.display = "block";
+} catch (error) { error = null; }
+}
+function hideTooltip() {
+try {
+tooltip.style.display = "none";
+} catch (error) { error = null; }
+}
+</script>
+
+<div class="tooltip" id="n0">Start</div>
+<div class="tooltip" id="n1"><br>actions/setup-dotnet@v1.7.2</div>
+<div class="tooltip" id="n3">DOTNET_SDK_VERSION</div>
+<div class="tooltip" id="n5">./.actions/dotnet-nuget-sleet/v1<br></div>
+<div class="tooltip" id="n8"><br>actions/setup-dotnet@v2.0.0</div>
+<div class="tooltip" id="n10">DOTNET_SDK_VERSION</div>
+<div class="tooltip" id="n12">./.actions/dotnet-nuget-jfrog/v1</div>
+<div class="tooltip" id="n14">TO BE IMPLEMENTED</div>
+<div class="tooltip" id="n17">DOTNET_NUGET_SLEET_FEED_HOST<br>DOTNET_NUGET_SLEET_FEED_NAMES<br>SLEET_FEED_USERNAME<br>SLEET_FEED_PASSWORD<br>CLEANUP == false</div>
+<div class="tooltip" id="n18">Diagram: dotnet//v1 Composite Action<br>Author:    Gerson Graciani <ggraciani@fpcomplete.com><br>Date:       2022-05-03<br><br>Describe the required steps to build a DotNet application<br><br>TODO:<br>Provide steps for static analysis on dotnet-build@v2<br>Provide steps for nuget feed from artifactory on dotnet-nuget-jfrog@v1</div>
+<div class="tooltip" id="n20">./.actions/dotnet-build/v1</div>
+<div class="tooltip" id="n23">DOTNET_SOLUTION_FILE<br>DOTNET_BUILD_CONFIGURATION<br>DOTNET_APP_VERSION<br>DOTNET_APP_PATH<br>DOTNET_TEST_RESULTS_PATH<br></div>
+<div class="tooltip" id="n25">./.actions/dotnet-nuget-sleet/v1<br></div>
+<div class="tooltip" id="n27">./.actions/dotnet-nuget-jfrog/v1</div>
+<div class="tooltip" id="n29">TO BE IMPLEMENTED</div>
+<div class="tooltip" id="n31">DOTNET_NUGET_SLEET_FEED_HOST<br>DOTNET_NUGET_SLEET_FEED_NAMES<br>SLEET_FEED_USERNAME<br>SLEET_FEED_PASSWORD<br>CLEANUP == true</div>
+<div class="tooltip" id="e3">DOTNET_NUGET_STRATEGY == sleet/v1</div>
+<div class="tooltip" id="e7">DOTNET_SETUP_VERSION == v1.7.2</div>
+<div class="tooltip" id="e11">DOTNET_SETUP_VERSION == v2.0.0</div>
+<div class="tooltip" id="e13">DOTNET_NUGET_STRATEGY == jfrog/v1</div>
+<div class="tooltip" id="e20">DOTNET_BUILD_STRATEGY == build/v1</div>
+<div class="tooltip" id="e27">DOTNET_NUGET_STRATEGY == sleet/v1</div>
+<div class="tooltip" id="e31">DOTNET_NUGET_STRATEGY == jfrog/v1</div>
+
+<map name="image1_1">
+  <area shape="poly" coords="2432,577,2432,577,2658,577,2658,587,2432,587,2432,587" alt="" onmouseover="showTooltip('e31')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="2397,552,2397,552,2397,276,2397,276,2397,276,2398,271,2398,270,2398,269,2400,266,2401,265,2402,264,2405,263,2406,262,2407,262,2411,261,2412,261,2412,261,2658,261,2658,271,2412,271,2412,266,2413,271,2408,272,2408,267,2410,271,2407,273,2405,269,2409,271,2407,274,2403,272,2408,273,2407,277,2402,276,2407,276,2407,552,2407,552" alt="" onmouseover="showTooltip('e27')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="1813,577,1813,577,2036,577,2036,587,1813,587,1813,587" alt="" onmouseover="showTooltip('e20')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="1152,577,1152,577,1379,577,1379,587,1152,587,1152,587" alt="" onmouseover="showTooltip('e13')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="548,577,548,577,754,577,754,587,548,587,548,587" alt="" onmouseover="showTooltip('e11')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="524,611,524,611,524,892,519,892,524,891,524,896,519,896,524,894,525,897,521,900,524,895,527,897,524,901,525,896,529,897,529,902,529,897,762,897,762,907,529,907,528,907,528,907,524,906,523,906,522,906,519,904,517,903,517,902,515,899,514,898,514,897,514,893,514,892,514,892,514,611,514,611" alt="" onmouseover="showTooltip('e7')" onmouseout="hideTooltip()"/>
+  <area shape="poly" coords="1118,552,1118,552,1118,276,1118,276,1118,276,1119,271,1119,270,1119,269,1121,266,1122,265,1123,264,1126,263,1127,262,1128,262,1132,261,1133,261,1133,261,1379,261,1379,271,1133,271,1133,266,1134,271,1129,272,1129,267,1131,271,1128,273,1125,269,1130,271,1128,274,1124,272,1129,273,1128,277,1123,276,1128,276,1128,552,1128,552" alt="" onmouseover="showTooltip('e3')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2669,15,2915,96" alt="" onmouseover="showTooltip('n31')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2704,334,2880,397" alt="" onmouseover="showTooltip('n29')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2669,554,2915,609" href="DotnetNugetJfrogv1.html" alt="" onmouseover="showTooltip('n27')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2669,239,2915,294" href="DotnetNugetSleetv1.html" alt="" onmouseover="showTooltip('n25')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2035,320,2255,411" alt="" onmouseover="showTooltip('n23')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="2047,554,2242,609" href="DotnetBuildv1.html" alt="" onmouseover="showTooltip('n20')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="15,637,456,788" alt="" onmouseover="showTooltip('n18')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1390,15,1636,96" alt="" onmouseover="showTooltip('n17')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1425,334,1601,397" alt="" onmouseover="showTooltip('n14')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1390,554,1636,609" href="DotnetNugetJfrogv1.html" alt="" onmouseover="showTooltip('n12')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="795,346,945,385" alt="" onmouseover="showTooltip('n10')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="765,554,975,609" alt="" onmouseover="showTooltip('n8')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="1390,239,1636,294" href="DotnetNugetSleetv1.html" alt="" onmouseover="showTooltip('n5')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="795,693,945,731" alt="" onmouseover="showTooltip('n3')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="773,875,967,930" alt="" onmouseover="showTooltip('n1')" onmouseout="hideTooltip()"/>
+  <area shape="rect" coords="220,567,250,597" alt="" onmouseover="showTooltip('n0')" onmouseout="hideTooltip()"/>
+</map>
+
+
+    <table class="yimagetable" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td><img class="yimage" src="Dotnetv11_1.png" usemap="#image1_1" border="0" alt=""/></td>
+      </tr>
+    </table>
+
+</body>
+</html>
