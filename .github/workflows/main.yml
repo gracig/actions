@@ -251,7 +251,7 @@ on:
         default: CONTAINER_AZURE_REPO_NAME_DEFAULT
         
       DEPLOY_BRANCH:
-        required: true
+        required: false
         type: boolean
         description: |
           A boolean value that indicates whether or not 
