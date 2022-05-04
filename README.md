@@ -4,7 +4,7 @@
 
 doc folder contains a BPMN diagram describing the whole process
 
-[BPMN Diagram](http://htmlpreview.github.io/?https://github.com/gracig/actions/blob/doc/index.html)
+[BPMN Diagram](http://htmlpreview.github.io/?https://github.com/gracig/actions/blob/main/doc/index.html)
 
 
 Diagram source code is doc/BestBuyCDPipeline.graphml
