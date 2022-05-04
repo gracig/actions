@@ -320,8 +320,8 @@ on:
           - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
 
 env:
-  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.APP_VERSION }}
-  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.APP_VERSION }}
+  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
+  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
   DOTNET_TEST_RESULTS_PATH: ${{ github.workspace }}/artifacts/test-results
 
 jobs:
@@ -339,60 +339,61 @@ jobs:
           repository: ${{ inputs.WORKFLOW_REPO  }}
           path: "./actions"
 
-      - name: Build Dotnet Application
-        if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
-        uses: "./.actions/dotnet/v1"
-        with:
-          DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}
-          DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}
-          DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}
-          DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}
-          DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
-          DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
-          DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
-          DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}
-          DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
-          DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
-          SLEET_FEED_USERNAME: ${{ secrets.SLEET_FEED_USERNAME }}
-          SLEET_FEED_PASSWORD: ${{ secrets.SLEET_FEED_PASSWORD }}
-          DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}
-
-      - name: Build Container
-        if: contains(inputs.WORKFLOW_TAGS, 'container/v1')
-        uses: "./.actions/container/v1"
-        with:
-          DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
-          CONTAINER_BUILD_STRATEGY: ${{ inputs.CONTAINER_BUILD_STRATEGY }}
-          CONTAINER_AWS_IMAGE_NAME: ${{ env.CONTAINER_AWS_IMAGE_NAME }}
-          CONTAINER_AZURE_IMAGE_NAME: ${{ env.CONTAINER_AZURE_IMAGE_NAME }}
-          CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
-          CONTAINER_DOCKERFILE_PATH: ${{ inputs.CONTAINER_DOCKERFILE_PATH }}
-          CONTAINER_DOCKER_BUILD_CONTEXT: ${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}
-          CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}
-          CONTAINER_AWS_REGISTRY_HOST: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}
-          CONTAINER_AWS_REPO_NAME: ${{ inputs.CONTAINER_AWS_REPO_NAME }}
-          CONTAINER_AZURE_REGISTRY_HOST: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}
-          CONTAINER_AZURE_REPO_NAME: ${{ inputs.CONTAINER_AZURE_REPO_NAME }}
-          ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
-          ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
-
-  deploy:
-    name: Deploy application
-    needs: build
-    runs-on: self-hosted
-    if: inputs.DEPLOY_BRANCH
-    steps:
-      - name: Checkout shared workflow
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ inputs.WORKFLOW_REPO  }}
-          path: "./actions"
-
-      - name: Deploy on Kubernetes using ArgoCD and Env_Repo
-        if: contains(inputs.WORKFLOW_TAGS, 'argocd-deploy/v1')
-        uses: "./.actions/argocd-deploy/v1"
-        with:
-          ENV_REPO: ${{ inputs.ENV_REPO }}
-          ENV_REPO_TOKEN: ${{ secrets.ENV_REPO_TOKEN }}
-          CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
-          ARGOCD_APP_NAME: ${{ inputs.ARGOCD_APP_NAME }}
+ #     - name: Build Dotnet Application
+ #       if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
+ #       uses: "./.actions/dotnet/v1"
+ #       with:
+ #         DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}
+ #         DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}
+ #         DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}
+ #         DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}
+ #         DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
+ #         DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
+ #         DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
+ #         DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}
+ #         DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
+ #         DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
+ #         SLEET_FEED_USERNAME: ${{ secrets.SLEET_FEED_USERNAME }}
+ #         SLEET_FEED_PASSWORD: ${{ secrets.SLEET_FEED_PASSWORD }}
+ #         DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}
+#
+ #     - name: Build Container
+ #       if: contains(inputs.WORKFLOW_TAGS, 'container/v1')
+ #       uses: "./.actions/container/v1"
+ #       with:
+ #         DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
+ #         CONTAINER_BUILD_STRATEGY: ${{ inputs.CONTAINER_BUILD_STRATEGY }}
+ #         CONTAINER_AWS_IMAGE_NAME: ${{ env.CONTAINER_AWS_IMAGE_NAME }}
+ #         CONTAINER_AZURE_IMAGE_NAME: ${{ env.CONTAINER_AZURE_IMAGE_NAME }}
+ #         CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
+ #         CONTAINER_DOCKERFILE_PATH: ${{ inputs.CONTAINER_DOCKERFILE_PATH }}
+ #         CONTAINER_DOCKER_BUILD_CONTEXT: ${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}
+ #         CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}
+ #         CONTAINER_AWS_REGISTRY_HOST: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}
+ #         CONTAINER_AWS_REPO_NAME: ${{ inputs.CONTAINER_AWS_REPO_NAME }}
+ #         CONTAINER_AZURE_REGISTRY_HOST: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}
+ #         CONTAINER_AZURE_REPO_NAME: ${{ inputs.CONTAINER_AZURE_REPO_NAME }}
+ #         ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+ #         ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
+#
+ # deploy:
+ #   name: Deploy application
+ #   needs: build
+ #   runs-on: self-hosted
+ #   if: inputs.DEPLOY_BRANCH
+ #   steps:
+ #     - name: Checkout shared workflow
+ #       uses: actions/checkout@v3
+ #       with:
+ #         repository: ${{ inputs.WORKFLOW_REPO  }}
+ #         path: "./actions"
+#
+ #     - name: Deploy on Kubernetes using ArgoCD and Env_Repo
+ #       if: contains(inputs.WORKFLOW_TAGS, 'argocd-deploy/v1')
+ #       uses: "./.actions/argocd-deploy/v1"
+ #       with:
+ #         ENV_REPO: ${{ inputs.ENV_REPO }}
+ #         ENV_REPO_TOKEN: ${{ secrets.ENV_REPO_TOKEN }}
+ #         CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
+ #         ARGOCD_APP_NAME: ${{ inputs.ARGOCD_APP_NAME }}
+#
