@@ -310,8 +310,8 @@ on:
 env:
   DOTNET_APP_VERSION: ${{ inputs.APP_VERSION }}
   CONTAINER_APP_VERSION: ${{ inputs.APP_VERSION }}-sha-${{ github.sha }}
-  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
-  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.CONTAINER_APP_VERSION }}
+  CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/${{ inputs.CONTAINER_AWS_REPO_NAME }}:${{ inputs.APP_VERSION }}-sha-${{ github.sha }}
+  CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/${{ inputs.CONTAINER_AZURE_REPO_NAME }}:${{ inputs.APP_VERSION }}-sha-${{ github.sha }}
   DOTNET_TEST_RESULTS_PATH: ${{ github.workspace }}/artifacts/test-results
 
 jobs:
