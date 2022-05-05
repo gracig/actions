@@ -337,7 +337,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ inputs.WORKFLOW_REPO  }}
-          path: "./actions"
+          path: "./.actions"
 
       - name: Print inputs, secrets and env variables
         if: contains( inputs.WORKFLOW_TAGS, 'debug')
@@ -423,7 +423,7 @@ jobs:
  #       uses: actions/checkout@v3
  #       with:
  #         repository: ${{ inputs.WORKFLOW_REPO  }}
- #         path: "./actions"
+ #         path: "./.actions"
 #
  #     - name: Deploy on Kubernetes using ArgoCD and Env_Repo
  #       if: contains(inputs.WORKFLOW_TAGS, 'argocd-deploy/v1')
