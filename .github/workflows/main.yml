@@ -404,24 +404,23 @@ jobs:
           ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
           ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
 
- # deploy:
- #   name: Deploy application
- #   needs: build
- #   runs-on: self-hosted
- #   if: inputs.DEPLOY_BRANCH
- #   steps:
- #     - name: Checkout shared workflow
- #       uses: actions/checkout@v3
- #       with:
- #         repository: ${{ inputs.WORKFLOW_REPO  }}
- #         path: "./.actions"
-#
- #     - name: Deploy on Kubernetes using ArgoCD and Env_Repo
- #       if: contains(inputs.WORKFLOW_TAGS, 'argocd-deploy/v1')
- #       uses: "./.actions/argocd-deploy/v1"
- #       with:
- #         ENV_REPO: ${{ inputs.ENV_REPO }}
- #         ENV_REPO_TOKEN: ${{ secrets.ENV_REPO_TOKEN }}
- #         CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
- #         ARGOCD_APP_NAME: ${{ inputs.ARGOCD_APP_NAME }}
-#
+  deploy:
+    name: Deploy application
+    needs: build
+    runs-on: ubuntu-latest
+    if: inputs.DEPLOY_BRANCH
+    steps:
+      - name: Checkout shared workflow
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.WORKFLOW_REPO  }}
+          path: "./.actions"
+
+      - name: Deploy on Kubernetes using ArgoCD and Env_Repo
+        if: contains(inputs.WORKFLOW_TAGS, 'argocd-deploy/v1')
+        uses: "./.actions/argocd-deploy/v1"
+        with:
+          ENV_REPO: ${{ inputs.ENV_REPO }}
+          ENV_REPO_TOKEN: ${{ secrets.ENV_REPO_TOKEN }}
+          CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
+          ARGOCD_APP_NAME: ${{ inputs.ARGOCD_APP_NAME }}
