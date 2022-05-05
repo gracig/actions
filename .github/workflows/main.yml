@@ -341,7 +341,40 @@ jobs:
 
       - name: Print environment variables
         if: contains( inputs.WORKFLOW_TAGS, 'debug')
-        run: printenv
+        run: |
+          echo "WORKFLOW_REPO: ${{ inputs.WORKFLOW_REPO }}"
+          echo "WORKFLOW_TAGS: ${{ inputs.WORKFLOW_TAGS }}"
+          echo "DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}"
+          echo "DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}"
+          echo "DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}"
+          echo "DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}"
+          echo "DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}"
+          echo "DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}"
+          echo "DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}"
+          echo "DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}"
+          echo "DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}"
+          echo "DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}"
+          echo "CONTAINER_BUILD_STRATEGY: ${{ inputs.CONTAINER_BUILD_STRATEGY }}"
+          echo "CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}"
+          echo "CONTAINER_DOCKERFILE_PATH: ${{ inputs.CONTAINER_DOCKERFILE_PATH }}"
+          echo "CONTAINER_DOCKER_BUILD_CONTEXT: ${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}"
+          echo "CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}"
+          echo "CONTAINER_AWS_REGISTRY_HOST: ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
+          echo "CONTAINER_AWS_REPO_NAME: ${{ inputs.CONTAINER_AWS_REPO_NAME }}"
+          echo "CONTAINER_AZURE_REGISTRY_HOST: ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+          echo "CONTAINER_AZURE_REPO_NAME: ${{ inputs.CONTAINER_AZURE_REPO_NAME }}"
+          echo "DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}"
+          echo "ENV_REPO: ${{ inputs.ENV_REPO }}"
+          echo "ARGOCD_APP_NAME: ${{ inputs.ARGOCD_APP_NAME }}"
+          echo "ACR_USERNAME: ${{ secrets.ACR_USERNAME }}"
+          echo "ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}"
+          echo "SLEET_FEED_USERNAME: ${{ secrets.SLEET_FEED_USERNAME }}"
+          echo "SLEET_FEED_PASSWORD: ${{ secrets.SLEET_FEED_PASSWORD }}"
+          echo "ENV_REPO_TOKEN: ${{ secrets.ENV_REPO_TOKEN }}"
+          echo "CONTAINER_AWS_IMAGE_NAME: ${{ env.CONTAINER_AWS_IMAGE_NAME }}"
+          echo "CONTAINER_AZURE_IMAGE_NAME: ${{ env.CONTAINER_AZURE_IMAGE_NAME }}"
+          echo "DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}"
+
 
  #     - name: Build Dotnet Application
  #       if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
