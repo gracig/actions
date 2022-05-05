@@ -49,21 +49,34 @@ runs:
   steps:
     - name: Build image
       shell: bash
-      run: docker build -f "${{ inputs.CONTAINER_DOCKERFILE_PATH }}" -t "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" -t "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}" "${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}"
+      run: |
+        echo <<EOF
+        docker build -f "${{ inputs.CONTAINER_DOCKERFILE_PATH }}" -t "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" -t "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}" "${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}"
+        EOF
+
     - name: Push to ECR
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo 'aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
+        echo <<EOF
+        aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
         docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
-        docker push "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}"'
+        docker push "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}"
+        EOF
+
     - name: Push to ACR
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo 'docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
-        docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"'
+        echo <<EOF
+        docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
+        EOF
+
     - name: Remove images
       if: always()
       shell: bash
-      run: echo docker rmi -f "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
+      run: |
+        echo <<EOF
+        docker rmi -f "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}" "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
+        EOF
