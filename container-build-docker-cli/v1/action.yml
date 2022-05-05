@@ -54,15 +54,15 @@ runs:
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
-        echo docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
-        echo docker push "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}"
+        echo 'aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
+        docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
+        docker push "${{ inputs.CONTAINER_AWS_IMAGE_NAME }}"'
     - name: Push to ACR
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
-        echo docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
+        echo 'docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"'
     - name: Remove images
       if: always()
       shell: bash
