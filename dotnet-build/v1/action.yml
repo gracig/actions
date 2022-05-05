@@ -50,7 +50,6 @@ runs:
       run: dotnet test --nologo --no-build -v minimal "${{ inputs.DOTNET_SOLUTION_FILE }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" --logger trx -r "${{ inputs.DOTNET_TEST_RESULTS_PATH }}"
 
     - name: Save test results
-      shell: bash
       uses: actions/upload-artifact@v2
       with:
         name: dotnet-test-results
