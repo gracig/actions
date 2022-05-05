@@ -61,7 +61,7 @@ runs:
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        docker login --username "${{ secrets.ACR_USERNAME }}" --password "${{ secrets.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
         docker push "${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
     - name: Remove images
       if: always()
