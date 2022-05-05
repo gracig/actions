@@ -376,24 +376,24 @@ jobs:
           echo "DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}"
 
 
- #     - name: Build Dotnet Application
- #       if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
- #       uses: "./.actions/dotnet/v1"
- #       with:
- #         DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}
- #         DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}
- #         DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}
- #         DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}
- #         DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
- #         DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
- #         DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
- #         DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}
- #         DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
- #         DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
- #         SLEET_FEED_USERNAME: ${{ secrets.SLEET_FEED_USERNAME }}
- #         SLEET_FEED_PASSWORD: ${{ secrets.SLEET_FEED_PASSWORD }}
- #         DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}
-#
+      - name: Build Dotnet Application
+        if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
+        uses: "./.actions/dotnet/v1"
+        with:
+          DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}
+          DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}
+          DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}
+          DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}
+          DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
+          DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
+          DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
+          DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}
+          DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}
+          DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}
+          SLEET_FEED_USERNAME: ${{ secrets.SLEET_FEED_USERNAME }}
+          SLEET_FEED_PASSWORD: ${{ secrets.SLEET_FEED_PASSWORD }}
+          DOTNET_TEST_RESULTS_PATH: ${{ env.DOTNET_TEST_RESULTS_PATH }}
+
  #     - name: Build Container
  #       if: contains(inputs.WORKFLOW_TAGS, 'container/v1')
  #       uses: "./.actions/container/v1"
