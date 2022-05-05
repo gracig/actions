@@ -37,7 +37,7 @@ runs:
       run: |
         echo 'Regarding store-password-in-clear-text, see https://github.com/NuGet/Home/issues/1851#issue-122862259'
         for FEED in "${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}"; do
-          dotnet nuget add source "${{ inputs.SLEET_FEED_HOST }}/$FEED/index.json" --name "$FEED" -u "${{ secrets.SLEET_FEED_USERNAME }}" -p "${{ secrets.SLEET_FEED_PASSWORD }}" --store-password-in-clear-text
+          dotnet nuget add source "${{ inputs.SLEET_FEED_HOST }}/$FEED/index.json" --name "$FEED" -u "${{ inputs.SLEET_FEED_USERNAME }}" -p "${{ inputs.SLEET_FEED_PASSWORD }}" --store-password-in-clear-text
         done
     - name: Cleanup nuget feed sources with sleet
       if: inputs.SLEET_CLEANUP == 'true'

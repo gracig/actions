@@ -28,8 +28,8 @@ inputs:
         Requirements:
         - inputs.DOTNET_NUGET_SLEET_FEED_HOST
         - inputs.DOTNET_NUGET_SLEET_FEED_NAMES
-        - secrets.SLEET_FEED_USERNAME
-        - secrets.SLEET_FEED_PASSWORD
+        - inputs.SLEET_FEED_USERNAME
+        - inputs.SLEET_FEED_PASSWORD
       - jfrog/v1: Use JFrog Artifact as nuget feed source
         Note: Jfrog is not implemented yet.
     default: sleet/v1
