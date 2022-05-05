@@ -51,7 +51,7 @@ runs:
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        docker login --username "${{ secrets.ACR_USERNAME }}" --password "${{ secrets.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
+        docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
         for IMAGE in $(docker-compose config | yq -r '.services[] | select(.build) | .image')
         do
           docker tag "$IMAGE" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/$IMAGE"

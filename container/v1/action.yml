@@ -130,8 +130,8 @@ runs:
         echo "CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}"
         echo "DOTNET_TEST_RESULTS_PATH: ${{ inputs.DOTNET_TEST_RESULTS_PATH }}"
         echo "DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}"
-        echo "ACR_USERNAME: ${{ secrets.ACR_USERNAME }}"
-        echo "ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}"
+        echo "ACR_USERNAME: ${{ inputs.ACR_USERNAME }}"
+        echo "ACR_PASSWORD: ${{ inputs.ACR_PASSWORD }}"
 
     - name: Build Container using docker cli
       if: inputs.CONTAINER_BUILD_STRATEGY == 'docker-cli/v1'
