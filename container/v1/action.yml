@@ -2,7 +2,7 @@ name: Container V1 Composite Action
 description: Build, Test and Package a Container
 inputs:
   CONTAINER_BUILD_STRATEGY:
-    required: false
+    required: true
     description: |
       The container build strategy to use.
       Possible Values:
@@ -138,9 +138,8 @@ runs:
       uses: "./.actions/container-build-docker-cli/v1"
       with:
         DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
-        CONTAINER_BUILD_STRATEGY: ${{ inputs.CONTAINER_BUILD_STRATEGY }}
-        CONTAINER_AWS_IMAGE_NAME: ${{ env.CONTAINER_AWS_IMAGE_NAME }}
-        CONTAINER_AZURE_IMAGE_NAME: ${{ env.CONTAINER_AZURE_IMAGE_NAME }}
+        CONTAINER_AWS_IMAGE_NAME: ${{ inputs.CONTAINER_AWS_IMAGE_NAME }}
+        CONTAINER_AZURE_IMAGE_NAME: ${{ inputs.CONTAINER_AZURE_IMAGE_NAME }}
         CONTAINER_DOCKERFILE_PATH: ${{ inputs.CONTAINER_DOCKERFILE_PATH }}
         CONTAINER_DOCKER_BUILD_CONTEXT: ${{ inputs.CONTAINER_DOCKER_BUILD_CONTEXT }}
         CONTAINER_AWS_REGION: ${{ inputs.CONTAINER_AWS_REGION }}
