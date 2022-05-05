@@ -172,7 +172,7 @@ runs:
         CLEANUP: "false"
 
     - name: Build DotNet v1 application
-      if: inputs.DOTNET_BUILD_STRATEGY == 'build/v1'
+      if: inputs.DOTNET_BUILD_STRATEGY == 'dotnet-build/v1'
       uses: "./.actions/dotnet-build/v1"
       with:
         DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
