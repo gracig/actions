@@ -339,7 +339,7 @@ jobs:
           repository: ${{ inputs.WORKFLOW_REPO  }}
           path: "./actions"
 
-      - name: Print environment variables
+      - name: Print inputs, secrets and env variables
         if: contains( inputs.WORKFLOW_TAGS, 'debug')
         run: |
           echo "WORKFLOW_REPO: ${{ inputs.WORKFLOW_REPO }}"
