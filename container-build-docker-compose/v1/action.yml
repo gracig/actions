@@ -37,15 +37,12 @@ runs:
     - name: Build image(s)
       shell: bash
       run: |
-        echo <<EOF
         docker-compose build --build-arg VERSION="${{ inputs.CONTAINER_APP_VERSION }}"
-        EOF
 
     - name: Push to ECR
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo <<EOF
         aws ecr --region="${{ inputs.CONTAINER_AWS_REGION }}" get-login-password |
           docker login --username AWS --password-stdin "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}"
         for IMAGE in $(docker-compose config | yq -r '.services[] | select(.build) | .image')
@@ -53,30 +50,25 @@ runs:
           docker tag "$IMAGE" "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
           docker push "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
         done
-        EOF
     
     - name: Push to ACR
       if: inputs.DEPLOY_BRANCH
       shell: bash
       run: |
-        echo <<EOF
         docker login --username "${{ inputs.ACR_USERNAME }}" --password "${{ inputs.ACR_PASSWORD }}" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}"
         for IMAGE in $(docker-compose config | yq -r '.services[] | select(.build) | .image')
         do
           docker tag "$IMAGE" "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/$IMAGE"
           docker push "${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/$IMAGE"
         done
-        EOF
 
     - name: Remove images
       if: always()
       shell: bash
       run: |
-        echo <<EOF
         docker-compose config | yq -r '.services[] | select(.build) |
           "\(.image)
             ${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/\(.image)
             ${{ inputs.CONTAINER_AZURE_REGISTRY_HOST }}/\(.image)
           "' |
         xargs docker rmi -f
-        EOF
