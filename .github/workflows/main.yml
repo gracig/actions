@@ -147,7 +147,7 @@ on:
         description: |
           The container build strategy to use.
           Possible Values:
-          - dockercli/v1:
+          - docker-cli/v1:
             Description: Use docker cli build commands to build and push images
             Requirements:
             - inputs.DEPLOY_BRANCH
@@ -161,7 +161,7 @@ on:
             - inputs.CONTAINER_AZURE_REPO_NAME
             - secrets.ACR_USERNAME
             - secrets.ACR_PASSWORD
-          - dockercompose/v1:
+          - docker-compose/v1:
             Description: Use docker compose to build images
             Requirements:
             - inputs.DEPLOY_BRANCH
@@ -171,6 +171,7 @@ on:
             - inputs.CONTAINER_AZURE_REGISTRY_HOST
             - secrets.ACR_USERNAME
             - secrets.ACR_PASSWORD
+        default: docker-cli/v1
 
       CONTAINER_DOCKERFILE_PATH:
         required: false

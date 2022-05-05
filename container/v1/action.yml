@@ -150,7 +150,7 @@ runs:
 
     - name: Build Container using docker compose
       if: inputs.CONTAINER_BUILD_STRATEGY == 'docker-compose/v1'
-      uses: "./.actions/container-build-docker-cli/v1"
+      uses: "./.actions/container-build-docker-compose/v1"
       with:
         DEPLOY_BRANCH: ${{ inputs.DEPLOY_BRANCH }}
         CONTAINER_APP_VERSION: ${{ inputs.CONTAINER_APP_VERSION }}
