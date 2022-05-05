@@ -81,7 +81,7 @@ inputs:
     default: DOTNET_SOLUTION_FILE_DEFAULT
 
   DOTNET_APP_VERSION:
-    required: false
+    required: true
     description: |
       The version number of the dotnet application
       Used when:
