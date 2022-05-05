@@ -339,6 +339,10 @@ jobs:
           repository: ${{ inputs.WORKFLOW_REPO  }}
           path: "./actions"
 
+      - name: Print environment variables
+        if: contains( inputs.WORKFLOW_TAGS, 'debug')
+        run: printenv
+
  #     - name: Build Dotnet Application
  #       if: contains(inputs.WORKFLOW_TAGS, 'dotnet/v1')
  #       uses: "./.actions/dotnet/v1"
