@@ -127,6 +127,21 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Print inputs, secrets and env variables
+      shell: bash
+      run: |
+        echo "DOTNET_SETUP_VERSION: ${{ inputs.DOTNET_SETUP_VERSION }}"
+        echo "DOTNET_SDK_VERSION: ${{ inputs.DOTNET_SDK_VERSION }}"
+        echo "DOTNET_NUGET_STRATEGY: ${{ inputs.DOTNET_NUGET_STRATEGY }}"
+        echo "DOTNET_NUGET_SLEET_FEED_HOST: ${{ inputs.DOTNET_NUGET_SLEET_FEED_HOST }}"
+        echo "DOTNET_NUGET_SLEET_FEED_NAMES: ${{ inputs.DOTNET_NUGET_SLEET_FEED_NAMES }}"
+        echo "DOTNET_BUILD_STRATEGY: ${{ inputs.DOTNET_BUILD_STRATEGY }}"
+        echo "DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}"
+        echo "DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}"
+        echo "DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}"
+        echo "DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}"
+        echo "SLEET_FEED_USERNAME: ${{ inputs.SLEET_FEED_USERNAME }}"
+        echo "SLEET_FEED_PASSWORD: ${{ inputs.SLEET_FEED_PASSWORD }}"
 
     - name: Setup DotNet v.1.7.2
       if: inputs.DOTNET_SETUP_VERSION == 'v.1.7.2'
