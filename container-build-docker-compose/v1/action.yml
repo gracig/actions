@@ -36,7 +36,10 @@ runs:
     
     - name: Build image(s)
       shell: bash
-      run: echo docker-compose build --build-arg VERSION="${{ inputs.CONTAINER_APP_VERSION }}"
+      run: |
+        echo <<EOF
+        docker-compose build --build-arg VERSION="${{ inputs.CONTAINER_APP_VERSION }}"
+        EOF
 
     - name: Push to ECR
       if: inputs.DEPLOY_BRANCH
