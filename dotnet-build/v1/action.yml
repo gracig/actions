@@ -58,5 +58,4 @@ runs:
     - name: Run dotnet publish
       shell: bash
       run: |
-        rm -rf publish
-        dotnet publish --nologo --no-build -v minimal "${{ inputs.DOTNET_APP_PATH }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" -o "publish"
+        rm -rf publish && dotnet publish --nologo --no-build -v minimal "${{ inputs.DOTNET_APP_PATH }}" -c "${{ inputs.DOTNET_BUILD_CONFIGURATION }}" -o "publish"

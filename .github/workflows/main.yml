@@ -129,7 +129,7 @@ on:
           That path may be referenced inside the Dockerfile
           Used when: 
           - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: DOTNET_APP_PATH_DEFAULT
+        default: ./
 
       DOTNET_BUILD_CONFIGURATION:
         required: false
@@ -139,7 +139,7 @@ on:
           making a dotnet publish
           Used when:
           - inputs.DOTNET_BUILD_STRATEGY == build/v1
-        default: "Release"
+        default: Release
 
       CONTAINER_BUILD_STRATEGY:
         required: false
