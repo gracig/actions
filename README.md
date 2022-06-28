@@ -1,15 +1,40 @@
-# workflows
 
-# Repository to store common actions and workflows
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
-doc folder contains a BPMN diagram describing the whole process
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
-[BPMN Diagram](http://htmlpreview.github.io/?https://github.com/gracig/actions/blob/main/doc/index.html)
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
-Diagram source code is doc/BestBuyCDPipeline.graphml
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
-The yEd application can edit that diagram:
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
-https://www.yworks.com/products/yed/download
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
 
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
+
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
+
+<!--BEGIN_DOC-->
+First Text
+<!--END_DOC-->
