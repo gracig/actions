@@ -1,8 +1,3 @@
-FUCK YOU
-
-
-
-
 <!--BEGIN_DOC-->
-A document stringSecond Text
+A document string
 <!--END_DOC-->
