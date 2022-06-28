@@ -8,4 +8,4 @@ repos:
     rev: 698145588511b23008aaa2ca088c96cff5443fd0
     hooks:
       - id: gen-github-actions-doc
-        args: ['.github/workflows/main.yaml']
+        files: \.github/workflows/main\.yaml
