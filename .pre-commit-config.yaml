@@ -1,10 +1,10 @@
 ---
 repos:
   - repo: https://github.com/gracig/pre-commit-actions
-    rev: c6b449a0e5db9231735d1a3985afdeed6ff289b6
+    rev: 77d28c057a6f78d1181a1c802ed39f9c6085c417
     hooks:
       - id: check-yaml
   - repo: https://github.com/gracig/pre-commit-actions
-    rev: c6b449a0e5db9231735d1a3985afdeed6ff289b6
+    rev: 77d28c057a6f78d1181a1c802ed39f9c6085c417
     hooks:
       - id: gen-github-actions-doc
