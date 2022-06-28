@@ -13,10 +13,8 @@ The yEd application can edit that diagram:
 
 https://www.yworks.com/products/yed/download
 
-new
-new
-new
-new
-new
-new
-new
+<!--BEGIN DOC-->
+teste
+teste
+teste
+<!--END DOC-->
