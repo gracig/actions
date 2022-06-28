@@ -1,6 +1,6 @@
 A file
 
-
+Another test
 Teste
 
 <!--BEGIN_DOC-->
