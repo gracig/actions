@@ -1,40 +1,8 @@
+FUCK YOU
+
+
+
 
 <!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
-<!--END_DOC-->
-
-<!--BEGIN_DOC-->
-First Text
+A document stringSecond Text
 <!--END_DOC-->
