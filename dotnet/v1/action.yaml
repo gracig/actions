@@ -13,7 +13,7 @@ inputs:
   DOTNET_SDK_VERSION:
     required: true
     description: |
-      The desired version of the .NET SDK to be used 
+      The desired version of the .NET SDK to be used
       when building the source code.
       5.0.x Uses the latest version from the 5.0 channel
     default: 5.0.x
@@ -23,7 +23,7 @@ inputs:
     description: |
       The nuget feed strategy to used.
       Possible Values:
-      - sleet/v1: 
+      - sleet/v1:
         Description: Use sleet as nuget feed source
         Requirements:
         - inputs.DOTNET_NUGET_SLEET_FEED_HOST
@@ -61,7 +61,7 @@ inputs:
     description: |
       The build strategy to use
       Possible Values:
-      - build/v1: 
+      - build/v1:
         Description: Do a simple build, test and publish
         Requirements:
         - inputs.DOTNET_SOLUTION_FILE
@@ -93,7 +93,7 @@ inputs:
     description: |
       Indicates the file path to publish a dotnet application
       That path may be referenced inside the Dockerfile
-      Used when: 
+      Used when:
       - inputs.DOTNET_BUILD_STRATEGY == build/v1
     default: DOTNET_APP_PATH_DEFAULT
 
@@ -178,8 +178,8 @@ runs:
         DOTNET_SOLUTION_FILE: ${{ inputs.DOTNET_SOLUTION_FILE }}
         DOTNET_BUILD_CONFIGURATION: ${{ inputs.DOTNET_BUILD_CONFIGURATION }}
         DOTNET_APP_VERSION: ${{ inputs.DOTNET_APP_VERSION }}
-        DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}      
-        DOTNET_TEST_RESULTS_PATH: ${{ inputs.DOTNET_TEST_RESULTS_PATH }}      
+        DOTNET_APP_PATH: ${{ inputs.DOTNET_APP_PATH }}
+        DOTNET_TEST_RESULTS_PATH: ${{ inputs.DOTNET_TEST_RESULTS_PATH }}
 
     - name: Cleanup DotNet feed source with sleet
       if: inputs.DOTNET_NUGET_STRATEGY == 'sleet/v1'

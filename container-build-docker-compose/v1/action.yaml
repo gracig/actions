@@ -4,7 +4,7 @@ inputs:
   DEPLOY_BRANCH:
     required: true
     description: |
-      A boolean value that indicates whether or not 
+      A boolean value that indicates whether or not
       to publish the container image and makes a deploy
   CONTAINER_APP_VERSION:
     required: true
@@ -33,7 +33,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    
+
     - name: Build image(s)
       shell: bash
       run: |
@@ -50,7 +50,7 @@ runs:
           docker tag "$IMAGE" "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
           docker push "${{ inputs.CONTAINER_AWS_REGISTRY_HOST }}/$IMAGE"
         done
-    
+
     - name: Push to ACR
       if: inputs.DEPLOY_BRANCH
       shell: bash

@@ -1,11 +1,11 @@
 name: ArgoCD Deploy V1 Composite Action
-description: Deploy on Kubernetes using ArgoCD and ENV_REPO 
+description: Deploy on Kubernetes using ArgoCD and ENV_REPO
 inputs:
   ENV_REPO:
     required: true
     description: |
       Name of the infrastructure ENV repo that contains
-      the kustomize code to deploy on kubernetes and 
+      the kustomize code to deploy on kubernetes and
   CONTAINER_APP_VERSION:
     required: true
     description: |

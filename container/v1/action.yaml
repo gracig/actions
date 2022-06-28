@@ -75,11 +75,11 @@ inputs:
       Used when:
       - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
     default: CONTAINER_AZURE_REPO_NAME_DEFAULT
-    
+
   DEPLOY_BRANCH:
     required: true
     description: |
-      A boolean value that indicates whether or not 
+      A boolean value that indicates whether or not
       to publish the container image and makes a deploy
       Used when:
       - Deploy Job

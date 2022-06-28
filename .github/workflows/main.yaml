@@ -43,7 +43,7 @@ on:
         required: false
         type: string
         description: |
-          The desired version of the .NET SDK to be used 
+          The desired version of the .NET SDK to be used
           when building the source code.
           5.0.x Uses the latest version from the 5.0 channel
           Used when:
@@ -56,7 +56,7 @@ on:
         description: |
           The nuget feed strategy to used.
           Possible Values:
-          - sleet/v1: 
+          - sleet/v1:
             Description: Use sleet as nuget feed source
             Requirements:
             - inputs.DOTNET_NUGET_SLEET_FEED_HOST
@@ -99,7 +99,7 @@ on:
         description: |
           The build strategy to use
           Possible Values:
-          - build/v1: 
+          - build/v1:
             Description: Do a simple build, test and publish
             Requirements:
             - inputs.DOTNET_SOLUTION_FILE
@@ -127,7 +127,7 @@ on:
         description: |
           Indicates the file path to publish a dotnet application
           That path may be referenced inside the Dockerfile
-          Used when: 
+          Used when:
           - inputs.DOTNET_BUILD_STRATEGY == build/v1
         default: ./
 
@@ -238,12 +238,12 @@ on:
           Used when:
           - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
         default: CONTAINER_AZURE_REPO_NAME_DEFAULT
-        
+
       DEPLOY_BRANCH:
         required: false
         type: boolean
         description: |
-          A boolean value that indicates whether or not 
+          A boolean value that indicates whether or not
           to publish the container image and makes a deploy
           Used when:
           - Deploy Job
@@ -256,7 +256,7 @@ on:
         type: string
         description: |
           Name of the infrastructure ENV repo that contains
-          the kustomize code to deploy on kubernetes and 
+          the kustomize code to deploy on kubernetes and
           is used by ArgoCD
           Used when:
           - inputs.DEPLOY_STRATEGY == argocd-deploy/v1
@@ -286,14 +286,14 @@ on:
           Used when:
           - inputs.CONTAINER_BUILD_STRATEGY == dockercli/v1
           - inputs.CONTAINER_BUILD_STRATEGY == dockercompose/v1
-          
+
       SLEET_FEED_USERNAME:
         required: false
         description: |
           The username for the sleet repository
           Used when:
           - inputs.DOTNET_NUGET_STRATEGY == sleet/v1
-      
+
       SLEET_FEED_PASSWORD:
         required: false
         description: |
